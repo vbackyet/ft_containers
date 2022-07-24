@@ -13,7 +13,7 @@ NAME		= containers
 CC			= clang++
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -std=c++98
+CFLAGS		= -Wall -Wextra -Werror -std=c++11
 
 .cpp.o:
 			${CC} ${CFLAGS} -c $< -o ${<:.cpp=.o}

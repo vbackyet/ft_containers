@@ -76,7 +76,13 @@ namespace ft
         {
             _stack_prototype.pop_back();
         }
+        // ????
         void emplace()
+        {
+            
+        }
+
+        void swap()
         {
             
         }
@@ -91,6 +97,73 @@ namespace ft
 // 	swaps the contents
 // (public member function)
 
+
+
+// Non-member functions
+// operator==operator!=operator<operator<=operator>operator>=operator<=>
+// (C++20)
+    template <class V, class COnt>
+    friend
+    bool
+     operator==(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype == rhs._stack_prototype);
+    }
+        template <class V, class COnt>
+    friend
+    bool
+     operator<=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype <= rhs._stack_prototype);
+    }
+        template <class V, class COnt>
+    friend
+    bool
+     operator>=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype >= rhs._stack_prototype);
+    }
+        template <class V, class COnt>
+    friend
+    bool
+     operator!=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype != rhs._stack_prototype);
+    }
+
+    template <class V, class COnt>
+    friend
+    bool
+     operator<(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype < rhs._stack_prototype);
+    }
+    template <class V, class COnt>
+    friend
+    bool
+     operator>(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
+    {
+        return(lhs._stack_prototype > rhs._stack_prototype);
+    }
+
+
+
+
+
+
+    // // можно так 
+    // bool
+    //  operator==(const ft::Stack<T, container_aka_vector>& rhs)
+    // {
+    //     return(this->_stack_prototype == rhs._stack_prototype);
+    // }
+
+        // template <class V, class Cont>
+        // friend
+        // bool
+        // operator==(const ft::Stack<V, Cont>& x, const ft::Stack<V, Cont>& y) {
+        //     return (x._stack_prototype == y._stack_prototype);
+        // }
 
     };
 }
