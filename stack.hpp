@@ -28,15 +28,15 @@ namespace ft
 
         container_aka_vector _stack_prototype; // автоматическое создание "ветора" при создании стэка
         //constructors 
-        explicit Stack(const container_aka_vector& cont = container_aka_vector()) : _stack_prototype(cont) 
-        {std::cout << "Создано нормально" << std::endl;} 
+        explicit Stack(const container_aka_vector& cont = container_aka_vector()) : _stack_prototype(cont) {}
+        // {std::cout << "Создано нормально" << std::endl;} 
         // при создании стека мы 
-        Stack(const Stack& prev_stack) : _stack_prototype(prev_stack._stack_prototype) 
-        { std::cout << "Создано при помощи копирования" << std::endl;}
+        Stack(const Stack& prev_stack) : _stack_prototype(prev_stack._stack_prototype) {};
+        // { std::cout << "Создано при помощи копирования" << std::endl;}
 
         Stack &operator=(const Stack& copy_stack)
         {
-            std::cout << "Operator = called" << std::endl;
+            // std::cout << "Operator = called" << std::endl;
             if (this != &copy_stack)
             {
                 this->_stack_prototype = copy_stack._stack_prototype;
@@ -76,17 +76,6 @@ namespace ft
         {
             _stack_prototype.pop_back();
         }
-        // ????
-        void emplace()
-        {
-            
-        }
-
-        void swap()
-        {
-            
-        }
-
 
 //  emplace
 // (C++11)

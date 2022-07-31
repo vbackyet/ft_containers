@@ -24,26 +24,27 @@
 
 namespace ft
 {
-    template <class T, class A = std::allocator<T>>
+    template <class T, class A = std::allocator<T> >
+    // создаем ветктор с типом Т -  создается аллокатор который выдеяет потом память
     class Vector
     {
         public:
-           typedef T   value_type;
-           typedef A   allocator_type;
-           typedef typename allocator_type::size_type   size_type;
-           typedef typename allocator_type::pointer   pointer;
+           typedef T   value_type; // ака инт
+           typedef A   allocator_type; // ака маллок для инта
+           typedef typename allocator_type::size_type   size_type; // я не знаю что это
+           typedef typename allocator_type::pointer   pointer; // указатель 
         private:
-            size_type _size_of_vector;
-            //allocator_type& _alloc;
-            size_type _capacity;
-            pointer  _start;
+            size_type _size_of_vector; // размер вектора 
+            allocator_type _alloc; //  
+            size_type _capacity; // вместительность 
+            pointer  _start; // начало выделенной памяти на вектор
     /////////////////////////// CONSTRUCTOR ///////////////////////////////
     // консруктор нормальный vector <string> ivector;
     public:
-        explicit Vector() 
+        explicit Vector(const allocator_type& _allocator  = allocator_type()):  _alloc(_allocator)
         {
             std::cout << "Создано нормально vector без аргументов" << std::endl;
-            const allocator_type& _alloc = allocator_type();
+            // _alloc = 0 ;
             _size_of_vector = 0;
             _alloc = allocator_type();
             _start= NULL;
@@ -51,20 +52,61 @@ namespace ft
 
         } 
         // конструктор нормальный с размером вектора vector <int> vector_first(5);
-        explicit Vector(size_type Vector_size)
+        explicit Vector(size_type Vector_size, const allocator_type& _allocator  = allocator_type()) :  _alloc(_allocator)
         {
-            const allocator_type& _alloc = allocator_type();
+            // _alloc =_allocator; // почему так constructor for 'ft::Vector<int>' must explicitly initialize the reference member '_alloc'
             std::cout << "Создано нормально vector  с размером " <<  Vector_size <<std::endl;
             _size_of_vector = Vector_size;
-            _alloc = allocator_type();
             _start= _alloc.allocate(Vector_size);
             _capacity = Vector_size;
 
         } 
+
+
+        // Vector& operator= (const Vector& x)
+        // {
+        //     if (this != &x)
+		// 	    this->assign(other.begin(), other.end());
+		//     return *this;
+        // }
         
         // консруктор копирования 
-        Vector(const Vector& prev_vector)
-            { std::cout << "Создано при помощи копирования" << std::endl;}
+        explicit Vector(const Vector& prev_vector)
+            { 
+                std::cout << "Создано при помощи копирования" << std::endl;
+                prev_vector = *this;
+
+            }
+        allocator_type get_allocator()
+        {
+            return (_alloc);
+        }
+
+        // assign !!!
+
+        void assign(size_type count, const T& value )
+        {
+            // создаем нужный вектор и делаем swap????
+            if (count > _capacity)
+            {
+
+            }
+            else if (count > _size_of_vector)
+            {
+
+            }
+            else
+            [
+
+            ]
+            
+        }
+        template< class InputIt >
+        void assign( InputIt first, InputIt last )
+        {
+
+        }
+
 
 // int main( )
 // {
@@ -92,7 +134,7 @@ namespace ft
     /////////////////////////// DESTRUCTOR ///////////////////////////////
         ~Vector()
         { std::cout << "Деструктор вызван" << std::endl;
-        _alloc.deallocate( _alloc, _size_of_vector );}
+        _alloc.deallocate( _start, _size_of_vector );}
 // size_type 	Unsigned integer type (usually std::size_t)
 // difference_type 	Signed integer type (usually std::ptrdiff_t)
 // reference 	value_type&
