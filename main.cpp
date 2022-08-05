@@ -7,7 +7,7 @@
 # include <vector>
 #include "stack.hpp"
 
-// #include "vector.hpp"
+#include "vector.hpp"
 int main(void)
 {
 
@@ -51,5 +51,36 @@ std::cout << "===== Vector =====" << std::endl;
     }
     std::cout << "}; \n";
 
-	ft::Vector <int> my_vector;
+
+    std::cout << "===== std :: assign =====" << std::endl;
+
+    std::vector<char> characters;
+ 
+    auto print_vector = [&](){
+        for (char c : characters)
+            std::cout << c << ' ';
+        std::cout << '\n';  
+    };
+ 
+    characters.assign(5, 'a');
+    print_vector();
+ 
+    const std::string extra(6, 'b');
+    characters.assign(extra.begin(), extra.end());
+    print_vector();
+ 
+    // characters.assign({'C', '+', '+', '1', '1'});
+    // print_vector();
+
+
+    std::cout << "===== ft :: assign =====" << std::endl;
+    ft::Vector <int> my_vector(6);
+    my_vector.assign(4, 1);
+       // auto print_my_vector = [&](){
+    // for (int u : my_vector)
+    //         std::cout << u << ' ';
+    //     std::cout << '\n';  
+    // };
+    // print_my_vector();
+
 }

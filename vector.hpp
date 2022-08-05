@@ -83,51 +83,46 @@ namespace ft
         }
 
         // assign !!!
+// std::vector<int>::iterator it;
+// for(it = v.begin(); it != v.end(); ++it)
+//     cout << *it;
+
+
 
         void assign(size_type count, const T& value )
         {
             // создаем нужный вектор и делаем swap????
             if (count > _capacity)
             {
+                // если нужно поменять большее количество ячеек чем есть в векторе
 
             }
             else if (count > _size_of_vector)
             {
-
+            // если нужно поменять большее количество ячеек чем заполнено в векторе
             }
             else
-            [
-
-            ]
+            {
+                //хватает места - нужно вставить и изменить размер !
+                
+                // _start. // заполняем вектор 
+            for (size_type i = 0; i < count; ++i)
+            {
+                *_start = value;
+                std::cout << "puk puk " << std::endl;
+            }
+                // удаляем остатки вектора 
+                _size_of_vector = count;
+            }
             
         }
-        template< class InputIt >
-        void assign( InputIt first, InputIt last )
-        {
+        // template< class InputIt >
+        // void assign( InputIt first, InputIt last )
+        // {
 
-        }
+        // }
 
-
-// int main( )
-// {
-//    allocator<int> v1Alloc;
-//    allocator<int>::pointer v1aPtr;
-//    v1aPtr = v1Alloc.allocate ( 10 );
-
-//    int i;
-//    for ( i = 0 ; i < 10 ; i++ )
-//    {
-//       v1aPtr[ i ] = i;
-//    }
-
-//    for ( i = 0 ; i < 10 ; i++ )
-//    {
-//       cout << v1aPtr[ i ] << " ";
-//    }
-//    cout << endl;
-//    v1Alloc.deallocate( v1aPtr, 10 );
-// }
-
+    /////////////////////////// ITERATOR ///////////////////////////////
 
 
 
