@@ -1,5 +1,6 @@
 #pragma once 
 #include <iterator>
+#include "iterator.hpp"
 
     // // allocator for integer values
     // allocator<int> myAllocator;
@@ -33,11 +34,14 @@ namespace ft
            typedef A   allocator_type; // ака маллок для инта
            typedef typename allocator_type::size_type   size_type; // я не знаю что это
            typedef typename allocator_type::pointer   pointer; // указатель 
+           typedef IteratorForVector<T*> iterator;
+        //    typedef iterator:: 
         private:
             size_type _size_of_vector; // размер вектора 
             allocator_type _alloc; //  
             size_type _capacity; // вместительность 
             pointer  _start; // начало выделенной памяти на вектор
+            iterator _p;
     /////////////////////////// CONSTRUCTOR ///////////////////////////////
     // консруктор нормальный vector <string> ivector;
     public:
@@ -46,7 +50,7 @@ namespace ft
             std::cout << "Создано нормально vector без аргументов" << std::endl;
             // _alloc = 0 ;
             _size_of_vector = 0;
-            _alloc = allocator_type();
+            // _alloc = allocator_type();
             _start= NULL;
             _capacity = 0;
 
@@ -124,8 +128,14 @@ namespace ft
 
     /////////////////////////// ITERATOR ///////////////////////////////
 
-
-
+			iterator begin(){ return (_p); };
+			// const_iterator begin() const { return (_p); }
+			iterator end(){ return (_p + _size_of_vector); }
+			// const_iterator end() const{ return (_p + _size_of_vector);}
+			// reverse_iterator rbegin(){return reverse_iterator(end());};
+			// const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
+			// reverse_iterator rend(){return reverse_iterator(begin());};
+			// const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
     /////////////////////////// DESTRUCTOR ///////////////////////////////
         ~Vector()
         { std::cout << "Деструктор вызван" << std::endl;

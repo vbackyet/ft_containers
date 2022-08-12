@@ -6,7 +6,7 @@
 # include <stack>
 # include <vector>
 #include "stack.hpp"
-
+# include <iterator>
 #include "vector.hpp"
 int main(void)
 {
@@ -65,6 +65,24 @@ std::cout << "===== Vector =====" << std::endl;
     characters.assign(5, 'a');
     print_vector();
  
+    std::vector<int> myvector2;
+    for (int i=1; i<=5; i++) myvector2.push_back(10);
+    std::vector<int>::iterator it2 = myvector2.begin() ;
+
+    std::vector<int> myvector;
+    for (int i=1; i<=5; i++) myvector.push_back(i);
+    std::cout << "myvector contains:";
+    std::vector<int>::iterator it = myvector.begin() ;
+    std::cout << "***********************" << *it;
+    it++;
+    it2= it;
+    std::cout << "***********************" << *(it2-1);
+    std::cout << '\n';
+
+
+
+
+
     const std::string extra(6, 'b');
     characters.assign(extra.begin(), extra.end());
     print_vector();
@@ -75,12 +93,17 @@ std::cout << "===== Vector =====" << std::endl;
 
     std::cout << "===== ft :: assign =====" << std::endl;
     ft::Vector <int> my_vector(6);
-    my_vector.assign(4, 1);
-       // auto print_my_vector = [&](){
+    ft::Vector<int>::value_type a = 6;
+    ft::Vector<int>::allocator_type o;
+    a = 4;
+    std::vector<int>::iterator ptr;
+    //  std::cout << o << std::endl;
+    // my_vector.assign(4, 1);
+    //    auto print_my_vector = [&](){
     // for (int u : my_vector)
     //         std::cout << u << ' ';
     //     std::cout << '\n';  
     // };
     // print_my_vector();
-
+// явная специализация шаблонов
 }
