@@ -45,65 +45,57 @@ std::cout << "===== Vector =====" << std::endl;
     v.push_back(13);
  
     // Print out the vector
-    std::cout << "v = { ";
-    for (int n : v) {
-        std::cout << n << ", ";
-    }
-    std::cout << "}; \n";
+
 
 
     std::cout << "===== std :: assign =====" << std::endl;
 
     std::vector<char> characters;
  
-    auto print_vector = [&](){
-        for (char c : characters)
-            std::cout << c << ' ';
-        std::cout << '\n';  
-    };
  
     characters.assign(5, 'a');
-    print_vector();
  
     std::vector<int> myvector2;
     for (int i=1; i<=5; i++) myvector2.push_back(10);
-    std::vector<int>::iterator it2 = myvector2.begin() ;
-
-    std::vector<int> myvector;
-    for (int i=1; i<=5; i++) myvector.push_back(i);
-    std::cout << "myvector contains:";
-    std::vector<int>::iterator it = myvector.begin() ;
-    std::cout << "***********************" << *it;
-    it++;
-    it2= it;
-    std::cout << "***********************" << *(it2-1);
-    std::cout << '\n';
-
+    std::vector<int>::iterator it2;
 
 
 
 
     const std::string extra(6, 'b');
     characters.assign(extra.begin(), extra.end());
-    print_vector();
+
  
     // characters.assign({'C', '+', '+', '1', '1'});
     // print_vector();
 
+    std::vector<int> bar;
+    std::vector<int>::size_type sz;
+     sz = bar.capacity();
+    bar.reserve(100);   // this is the only difference with foo above
+    std::cout << "making bar grow:\n";
+    for (int i=0; i<100; ++i) {
+        bar.push_back(23);
+        if (sz!=bar.capacity()) {
+        sz = bar.capacity();
+        std::cout << "capacity changed: " << sz << '\n';
+        }
+    }
+        bar.reserve(2);
+    std::cout << bar.at(0) << std::endl;
+
+
 
     std::cout << "===== ft :: assign =====" << std::endl;
     ft::Vector <int> my_vector(6);
+    for (int i=1; i<=3; i++) my_vector.push_back(i);
+    std::cout << "here" << "\n";
+    // std::cout << my_vector[0]<< "\n";
     ft::Vector<int>::value_type a = 6;
     ft::Vector<int>::allocator_type o;
     a = 4;
-    std::vector<int>::iterator ptr;
-    //  std::cout << o << std::endl;
-    // my_vector.assign(4, 1);
-    //    auto print_my_vector = [&](){
-    // for (int u : my_vector)
-    //         std::cout << u << ' ';
-    //     std::cout << '\n';  
-    // };
-    // print_my_vector();
+    ft::Vector<int>::iterator ptr;
+    ptr = my_vector.begin();
+
 // явная специализация шаблонов
 }

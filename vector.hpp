@@ -1,5 +1,5 @@
 #pragma once 
-#include <iterator>
+
 #include "iterator.hpp"
 
     // // allocator for integer values
@@ -35,13 +35,12 @@ namespace ft
            typedef typename allocator_type::size_type   size_type; // я не знаю что это
            typedef typename allocator_type::pointer   pointer; // указатель 
            typedef IteratorForVector<T*> iterator;
-        //    typedef iterator:: 
         private:
             size_type _size_of_vector; // размер вектора 
             allocator_type _alloc; //  
             size_type _capacity; // вместительность 
             pointer  _start; // начало выделенной памяти на вектор
-            iterator _p;
+            pointer _p;
     /////////////////////////// CONSTRUCTOR ///////////////////////////////
     // консруктор нормальный vector <string> ivector;
     public:
@@ -66,6 +65,33 @@ namespace ft
 
         } 
 
+        void reserve( size_type new_cap )
+        {
+            if (new_cap > _capacity)
+            {
+                pointer _new_start = _alloc.allocate(new_cap);
+                _capacity = new_cap;
+                for(size_type i = 0; i <= _size_of_vector;i++)
+                {
+
+                }
+
+            }
+
+        }
+        void push_back(value_type &element_to_insert)
+        {
+            std::cout << _p << " old" <<std::endl;
+            _alloc.construct(_p, element_to_insert );
+            std::cout << _p<< " new"  << std::endl;
+            // _p++; 
+        }
+        bool operator!=(Vector& x)
+        {
+            if (x._start != _start)
+                return true;
+            return false;
+        }
 
         // Vector& operator= (const Vector& x)
         // {

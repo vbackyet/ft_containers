@@ -2,6 +2,11 @@
 #include <iostream>
 #include <iterator>
 
+#include <memory>
+
+
+
+
 
 namespace ft
 {
@@ -42,7 +47,7 @@ namespace ft
 		typedef ft::random_access_iterator_tag		iterator_category;
 	};
     template <class Category ,class T, class pointer_ = T*, class reference_ = T&, class distance_ = ptrdiff_t >
-    class iterator
+    struct iterator
     {
        typedef Category   iterator_category;
        typedef T value_type;
@@ -56,13 +61,26 @@ namespace ft
 
         public:
             typedef T iterator_type;
+            // typedef    pointer;
         	IteratorForVector():_elem(0){};
+            
+            // template <class _Up>// для const T*
+			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
+            // T base() const  { return _elem; }
+
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
+            IteratorForVector(typename IteratorForVector::pointer vecPoint):_elem(vecPoint){};
 
 			~IteratorForVector() {};
-
-
-
+            bool operator!=(IteratorForVector &right)
+            {
+                return (_elem != right._elem);
+            }
+            IteratorForVector &operator++(){ _elem++; return (*this);};
+            IteratorForVector &operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);};
+            IteratorForVector &operator--(){ _elem--; return (*this);};
+            IteratorForVector &operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
+            IteratorForVector operator+(int my_change){ _elem = _elem + my_change; return (*this);};
 			// iterator_type base() const {return _elem;}
 			
 			// typename IteratorForVector::reference operator*(void) const { return (*_elem); };
