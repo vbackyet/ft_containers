@@ -112,11 +112,13 @@ std::cout << "===== Vector =====" << std::endl;
     c10.push_back(100);
     ft::Vector<int>::iterator it1;
      it1 = c10.begin();
+     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
+     std::cout << "\n=================" <<std::endl;
     it1 = c10.insert(it1, 200);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] <<std::endl;}
- 
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
+     std::cout << "\n=================" <<std::endl;
     c10.insert(it1, 2, 300);
-
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
 
     // std::vector<int> c2(2, 400);
     // c1.insert(std::next(it, 2), c2.begin(), c2.end());
