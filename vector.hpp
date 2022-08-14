@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 #include "iterator.hpp"
-
+#include "utils.hpp"
     // // allocator for integer values
     // allocator<int> myAllocator;
  
@@ -87,7 +87,7 @@ namespace ft
             _start = _new_start;
             _capacity = new_cap;
         }
-        void push_back(value_type &element_to_insert)
+        void push_back(const value_type &element_to_insert)
         {
             int i = 1;
             if (_capacity == _size_of_vector)
@@ -194,8 +194,51 @@ namespace ft
     const_reference front() const {return *_start;}
     reference back() { return *(_start + _size_of_vector - 1);}
     const_reference back() const { return *(_start + _size_of_vector - 1);}
-    T* data() { return _p; }
-    const T* data() const { return _p; }
+    T* data() { return _start; }
+    const T* data() const { return _start; }
+
+    /////////////////////////// MODIFIERS ///////////////////////////////
+    void clear()
+    {
+            for (size_type i = 0; i < _size_of_vector; i++)
+                _alloc.destroy(_start + i);
+            _size_of_vector = 0;
+    }
+    //// insert ///
+    iterator insert( iterator pos, const T& value )
+    {
+        insert(pos, 1, value);
+        return(pos--);
+    }
+    void insert( iterator pos, size_type count, const T& value )
+    {
+        int insertStart = pos - this->begin();
+        int oldEnd = _size_of_vector - 1;
+        int newEnd = _size_of_vector - 1 + count;
+
+        // capacity 
+        if (_capacity*2 < (_size_of_vector + count))
+            reserve(_size_of_vector + count);
+        else if (_capacity < (_size_of_vector + count))
+            reserve(_capacity*2);
+        while(newEnd >= (int ) _size_of_vector)
+        {
+            _start[newEnd--] = _start[oldEnd--];
+        }
+        while(newEnd >= insertStart)
+        {
+            _start[newEnd--] = value;
+        }
+        _size_of_vector += count;
+    }
+
+    // template< class InputIt >
+    
+    // void insert( iterator pos, InputIt first, InputIt last )
+    // {
+    //     typename ft::enable_if<!ft::Is_integral<InputIterator>::value, iterator>::type
+        
+    // }
     /////////////////////////// ITERATOR ///////////////////////////////
 
 			iterator begin(){ return (_start); };

@@ -77,10 +77,15 @@ namespace ft
                 return (_elem != right._elem);
             }
             IteratorForVector &operator++(){ _elem++; return (*this);};
-            IteratorForVector &operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);};
+            IteratorForVector operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
             IteratorForVector &operator--(){ _elem--; return (*this);};
-            IteratorForVector &operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
+            IteratorForVector operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
             IteratorForVector operator+(int my_change){ _elem = _elem + my_change; return (*this);};
+
+
+            // операторы для указателей
+            int operator-(IteratorForVector const &other_iterator)const { return (this->_elem - other_iterator._elem); };
+            bool operator>=(IteratorForVector const &other_iterator) const  { return (this->_elem >= other_iterator._elem); };
 			// iterator_type base() const {return _elem;}
 			
 			// typename IteratorForVector::reference operator*(void) const { return (*_elem); };

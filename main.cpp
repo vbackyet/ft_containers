@@ -8,6 +8,27 @@
 #include "stack.hpp"
 # include <iterator>
 #include "vector.hpp"
+
+
+void print(int id, const std::vector<int>& container)
+{
+    std::cout << id << ". ";
+    for (const int x: container) {
+         std::cout << x << ' ';
+    }
+    std::cout << '\n';
+}
+
+
+// void print(int id, ft::Vector<int>& container)
+// {
+//     std::cout << id << ". ";
+//     for (int x: container) {
+//          std::cout << x << ' ';
+//     }
+//     std::cout << '\n';
+// }
+ 
 int main(void)
 {
 
@@ -66,46 +87,42 @@ std::cout << "===== Vector =====" << std::endl;
     characters.assign(extra.begin(), extra.end());
 
  
-    // characters.assign({'C', '+', '+', '1', '1'});
-    // print_vector();
 
-    std::vector<int> bar;
-    std::vector<int>::size_type sz;
-     sz = bar.capacity();
-    bar.reserve(100);   // this is the only difference with foo above
-    std::cout << "making bar grow:\n";
-    for (int i=0; i<100; ++i) {
-        bar.push_back(23);
-        if (sz!=bar.capacity()) {
-        sz = bar.capacity();
-        std::cout << "capacity changed: " << sz << '\n';
-        }
-    }
-        bar.reserve(2);
-    std::cout << bar.at(0) << std::endl;
+    std::vector<int> c1(3, 100);
+    print(1, c1);
+ 
+    auto it = c1.begin();
+    it = c1.insert(it, 200);
+    print(2, c1);
+ 
+    c1.insert(it, 2, 300);
+    print(3, c1);
+
+    std::vector<int> c2(2, 400);
+    c1.insert(std::next(it, 2), c2.begin(), c2.end());
+    print(4, c1);
+    
 
 
+    ///////////////my_vector /////////////////
+    ft::Vector<int> c10(3);
+    int i = 100;
+    c10.push_back(i);
+    c10.push_back(100);
+    c10.push_back(100);
+    ft::Vector<int>::iterator it1;
+     it1 = c10.begin();
+    it1 = c10.insert(it1, 200);
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] <<std::endl;}
+ 
+    c10.insert(it1, 2, 300);
 
-    std::cout << "===== ft :: assign =====" << std::endl;
-    ft::Vector <int> my_vector(6);
-    for (int i=1; i<=3; i++) my_vector.push_back(i);
-    for (int i=0; i<3; i++) 
-    {   try
-        {std::cout << my_vector[i] <<  " |" <<std::endl;}
-        catch(...){
-        std::cout <<  " |" <<std::endl;}
-        }
-    // const int u = my_vector.at(0);
-    std::cout <<  my_vector.size() <<" " << my_vector.front() << " end\n";
-    // std::cout << my_vector[0]<< "\n";
-    ft::Vector<int>::value_type a = 6;
-    // ft::Vector<int>::allocator_type o;
-    a = 4;
-    ft::Vector<int>::iterator ptr;
-    ptr = my_vector.begin();
-    std::cout << my_vector.capacity() << '\n';
-    my_vector.reserve(100);
-    std::cout << my_vector.capacity() << '\n';
+
+    // std::vector<int> c2(2, 400);
+    // c1.insert(std::next(it, 2), c2.begin(), c2.end());
+    // print(4, c1);
+
+
 
 // явная специализация шаблонов
 }
