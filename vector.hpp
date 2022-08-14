@@ -40,7 +40,7 @@ namespace ft
             allocator_type _alloc; //  
             size_type _capacity; // вместительность 
             pointer  _start; // начало выделенной памяти на вектор
-            pointer _p;
+            // pointer _p;
     /////////////////////////// CONSTRUCTOR ///////////////////////////////
     // консруктор нормальный vector <string> ivector;
     public:
@@ -59,32 +59,34 @@ namespace ft
         {
             // _alloc =_allocator; // почему так constructor for 'ft::Vector<int>' must explicitly initialize the reference member '_alloc'
             std::cout << "Создано нормально vector  с размером " <<  Vector_size <<std::endl;
-            _size_of_vector = Vector_size;
+            _size_of_vector = 0;
             _start= _alloc.allocate(Vector_size);
             _capacity = Vector_size;
 
-        } 
+        }      
+        size_type capacity() const { return _capacity; }
 
         void reserve( size_type new_cap )
         {
-            if (new_cap > _capacity)
+            if (new_cap <= _capacity)
+                return ;
+
+            pointer _new_start = _alloc.allocate(new_cap);
+            _capacity = new_cap;
+            for(size_type i = 0; i <= _size_of_vector;i++)
             {
-                pointer _new_start = _alloc.allocate(new_cap);
-                _capacity = new_cap;
-                for(size_type i = 0; i <= _size_of_vector;i++)
-                {
-
-                }
-
+                _alloc.construct(_new_start + i, *(_start + i) );
             }
-
+            for (size_type i = 0; i < _size_of_vector; i++)
+                _alloc.destroy(_start + i);
+            _alloc.deallocate(_start, _capacity);
+            _start = _new_start;
+            _capacity = new_cap;
         }
         void push_back(value_type &element_to_insert)
         {
-            std::cout << _p << " old" <<std::endl;
-            _alloc.construct(_p, element_to_insert );
-            std::cout << _p<< " new"  << std::endl;
-            // _p++; 
+            _alloc.construct(_start + _size_of_vector, element_to_insert );
+            _size_of_vector++; 
         }
         bool operator!=(Vector& x)
         {
@@ -154,9 +156,9 @@ namespace ft
 
     /////////////////////////// ITERATOR ///////////////////////////////
 
-			iterator begin(){ return (_p); };
+			iterator begin(){ return (_start); };
 			// const_iterator begin() const { return (_p); }
-			iterator end(){ return (_p + _size_of_vector); }
+			iterator end(){ return (_start + _size_of_vector); }
 			// const_iterator end() const{ return (_p + _size_of_vector);}
 			// reverse_iterator rbegin(){return reverse_iterator(end());};
 			// const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};

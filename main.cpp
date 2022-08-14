@@ -92,10 +92,13 @@ std::cout << "===== Vector =====" << std::endl;
     std::cout << "here" << "\n";
     // std::cout << my_vector[0]<< "\n";
     ft::Vector<int>::value_type a = 6;
-    ft::Vector<int>::allocator_type o;
+    // ft::Vector<int>::allocator_type o;
     a = 4;
     ft::Vector<int>::iterator ptr;
     ptr = my_vector.begin();
+    std::cout << my_vector.capacity() << '\n';
+    my_vector.reserve(100);
+    std::cout << my_vector.capacity() << '\n';
 
 // явная специализация шаблонов
 }
