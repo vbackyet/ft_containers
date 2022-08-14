@@ -89,7 +89,14 @@ std::cout << "===== Vector =====" << std::endl;
     std::cout << "===== ft :: assign =====" << std::endl;
     ft::Vector <int> my_vector(6);
     for (int i=1; i<=3; i++) my_vector.push_back(i);
-    std::cout << "here" << "\n";
+    for (int i=0; i<3; i++) 
+    {   try
+        {std::cout << my_vector[i] <<  " |" <<std::endl;}
+        catch(...){
+        std::cout <<  " |" <<std::endl;}
+        }
+    // const int u = my_vector.at(0);
+    std::cout <<  my_vector.size() <<" " << my_vector.front() << " end\n";
     // std::cout << my_vector[0]<< "\n";
     ft::Vector<int>::value_type a = 6;
     // ft::Vector<int>::allocator_type o;

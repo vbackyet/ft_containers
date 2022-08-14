@@ -1,4 +1,5 @@
 #pragma once 
+#include <stdexcept>
 
 #include "iterator.hpp"
 
@@ -32,8 +33,10 @@ namespace ft
         public:
            typedef T   value_type; // ака инт
            typedef A   allocator_type; // ака маллок для инта
-           typedef typename allocator_type::size_type   size_type; // я не знаю что это
+           typedef typename allocator_type::size_type   size_type; 
            typedef typename allocator_type::pointer   pointer; // указатель 
+           typedef typename allocator_type::reference   reference; // указатель 
+           typedef typename allocator_type::const_reference   const_reference; // указатель 
            typedef IteratorForVector<T*> iterator;
         private:
             size_type _size_of_vector; // размер вектора 
@@ -65,7 +68,8 @@ namespace ft
 
         }      
         size_type capacity() const { return _capacity; }
-
+		size_type size() const {return _size_of_vector;}
+			
         void reserve( size_type new_cap )
         {
             if (new_cap <= _capacity)
@@ -85,6 +89,13 @@ namespace ft
         }
         void push_back(value_type &element_to_insert)
         {
+            int i = 1;
+            if (_capacity == _size_of_vector)
+            {
+                if (_size_of_vector != 0)
+                    i = _capacity *2;
+                reserve(i);
+            }
             _alloc.construct(_start + _size_of_vector, element_to_insert );
             _size_of_vector++; 
         }
@@ -154,6 +165,37 @@ namespace ft
 
         // }
 
+
+    /////////////////////////// ELEMNT ACCESS ///////////////////////////////
+
+    reference at( size_type pos )
+    {
+        if (pos >= 0)
+        {
+            pointer _at_p  = _start + pos;
+            return *(_at_p);
+        }
+        else
+            throw std::invalid_argument("");
+    }
+    reference operator[]( size_type pos )
+    {
+        if (pos >= 0)
+        {
+            pointer _at_p  = _start + pos;
+            return *(_at_p);
+        }
+        else
+            throw std::invalid_argument("");
+    }
+    const_reference at( size_type pos ) const { return _start.at(pos);}
+    const_reference operator[]( size_type pos ) const    { return _start.at(pos);}
+    reference front()    {        return *_start;    }
+    const_reference front() const {return *_start;}
+    reference back() { return *(_start + _size_of_vector - 1);}
+    const_reference back() const { return *(_start + _size_of_vector - 1);}
+    T* data() { return _p; }
+    const T* data() const { return _p; }
     /////////////////////////// ITERATOR ///////////////////////////////
 
 			iterator begin(){ return (_start); };
