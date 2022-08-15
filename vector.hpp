@@ -77,7 +77,7 @@ namespace ft
 
             pointer _new_start = _alloc.allocate(new_cap);
             _capacity = new_cap;
-            for(size_type i = 0; i <= _size_of_vector;i++)
+            for(size_type i = 0; i <= _size_of_vector - 1;i++)
             {
                 _alloc.construct(_new_start + i, *(_start + i) );
             }
@@ -207,24 +207,30 @@ namespace ft
     //// insert ///
     iterator insert( iterator pos, const T& value )
     {
+        int ind = pos - this->begin();
         insert(pos, 1, value);
-        return(pos--);
+
+        return (this->begin() + ind);
     }
     void insert( iterator pos, size_type count, const T& value )
     {
         int insertStart = pos - this->begin();
         int oldEnd = _size_of_vector - 1;
         int newEnd = _size_of_vector - 1 + count;
-
+        // int i = 1;
+        // std::cout<< "|" << insertStart << "| :unsertStart " << oldEnd << " oldEnd " << newEnd << " newEnd " << std::endl;
         // capacity 
         if (_capacity*2 < (_size_of_vector + count))
             reserve(_size_of_vector + count);
         else if (_capacity < (_size_of_vector + count))
             reserve(_capacity*2);
-        while(newEnd >= (int ) _size_of_vector)
+        // for(int i = 0 ; i < (int ) _capacity ; i++) {std::cout << _start[i] << " v ";}
+        while(newEnd > (insertStart + (int)count - 1))
         {
             _start[newEnd--] = _start[oldEnd--];
+            // i++;
         }
+        // std::cout<< "|" << insertStart << "| :unsertStart " << newEnd << " newEnd " << std::endl;
         while(newEnd >= insertStart)
         {
             _start[newEnd--] = value;
@@ -232,13 +238,13 @@ namespace ft
         _size_of_vector += count;
     }
 
-    // template< class InputIt >
+    template< class InputIt >
     
-    // void insert( iterator pos, InputIt first, InputIt last )
-    // {
-    //     typename ft::enable_if<!ft::Is_integral<InputIterator>::value, iterator>::type
+    void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::Is_integral<InputIterator>::value, iterator>::type = 0 )
+    {
+
         
-    // }
+    }
     /////////////////////////// ITERATOR ///////////////////////////////
 
 			iterator begin(){ return (_start); };

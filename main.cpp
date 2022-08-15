@@ -110,6 +110,8 @@ std::cout << "===== Vector =====" << std::endl;
     c10.push_back(i);
     c10.push_back(100);
     c10.push_back(100);
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << &c10[i] << " ";}
+    std::cout << "\n=================" <<std::endl;
     ft::Vector<int>::iterator it1;
      it1 = c10.begin();
      for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
@@ -117,7 +119,7 @@ std::cout << "===== Vector =====" << std::endl;
     it1 = c10.insert(it1, 200);
     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
      std::cout << "\n=================" <<std::endl;
-    c10.insert(it1, 2, 300);
+    c10.insert(it1, 6, 300);
     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
 
     // std::vector<int> c2(2, 400);
