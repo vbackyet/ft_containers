@@ -122,9 +122,13 @@ std::cout << "===== Vector =====" << std::endl;
     c10.insert(it1, 6, 300);
     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
 
-    // std::vector<int> c2(2, 400);
-    // c1.insert(std::next(it, 2), c2.begin(), c2.end());
-    // print(4, c1);
+
+
+    ft::Vector<int> c20(2);
+    c20.push_back(400);
+    c20.push_back(400);
+    c10.insert((c10.begin() + 2), c20.begin(), c20.end());
+    print(4, c1);
 
 
 

@@ -3,24 +3,7 @@
 
 #include "iterator.hpp"
 #include "utils.hpp"
-    // // allocator for integer values
-    // allocator<int> myAllocator;
- 
-    // // allocate space for five ints
-    // int* arr = myAllocator.allocate(5);
- 
-    // // construct arr[0] and arr[3]
-    // // myAllocator.construct(arr, 100); // no longer allowed in C++20
-    // arr[0] = 100; // do this instead
-    // arr[3] = 10;
- 
-    // cout << arr[3] << endl;
-    // cout << arr[0] << endl;
- 
-    // // deallocate space for five ints
-    // myAllocator.deallocate(arr, 5);
- 
-    // return 0;
+
 
 
 
@@ -238,10 +221,16 @@ namespace ft
         _size_of_vector += count;
     }
 
-    template< class InputIt >
-    
-    void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::Is_integral<InputIterator>::value, iterator>::type = 0 )
+    template< class InputIt >    
+    void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type = 0 )
     {
+
+
+        pos--;
+
+        int size_of_vec = last - first;
+
+        std::cout<< size_of_vec << " puk "<< std::endl;
 
         
     }
