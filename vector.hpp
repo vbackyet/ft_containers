@@ -117,36 +117,22 @@ namespace ft
 
         void assign(size_type count, const T& value )
         {
-            // создаем нужный вектор и делаем swap????
-            if (count > _capacity)
-            {
-                // если нужно поменять большее количество ячеек чем есть в векторе
-
-            }
-            else if (count > _size_of_vector)
-            {
-            // если нужно поменять большее количество ячеек чем заполнено в векторе
-            }
-            else
-            {
-                //хватает места - нужно вставить и изменить размер !
-                
-                // _start. // заполняем вектор 
-            for (size_type i = 0; i < count; ++i)
-            {
-                *_start = value;
-                std::cout << "puk puk " << std::endl;
-            }
-                // удаляем остатки вектора 
-                _size_of_vector = count;
-            }
-            
+            this->clear();
+            _size_of_vector = count;
+            reserve(_size_of_vector);
+            for(int i = 0; i <  (int) _size_of_vector; i++)
+                _start[i] = value;            
         }
-        // template< class InputIt >
-        // void assign( InputIt first, InputIt last )
-        // {
-
-        // }
+        template< class InputIt >
+        void assign( InputIt first, InputIt last,  typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type = 0 )
+        {
+            this->clear();
+            _size_of_vector = last - first;
+            reserve(_size_of_vector);
+            // for(int i = 0; i < _size_of_vector; i++)
+            //     _start[i] = value;       
+            _start = first;  
+        }
 
 
     /////////////////////////// ELEMNT ACCESS ///////////////////////////////
@@ -249,6 +235,75 @@ namespace ft
         _size_of_vector += count;
 
         
+    }
+    /// erase
+
+    iterator erase( iterator pos )
+    {
+        if (pos < this->begin() || pos >= this->end())
+            throw std::out_of_range("");
+        int strtInsrt = pos - this->begin();
+        size_type i;
+        for ( i = strtInsrt; i < _size_of_vector; i++)
+        {
+            _alloc.destroy(_start + i);
+           _start[i] = _start[i+1];
+           
+        }
+        _alloc.destroy(_start + i + 1);
+        
+        _size_of_vector--;
+        return (_start + strtInsrt);
+    }
+    iterator erase( iterator first, iterator last )
+    {
+        if (first < this->begin() || last >= this->end())
+            throw std::out_of_range("");
+        int delta = last - first;
+        int strtInsrt = first - this->begin();
+        size_type i;
+        for ( i = strtInsrt; (int )i <= delta + strtInsrt ; i++)
+        {
+            _alloc.destroy(_start + i);
+           _start[i] = _start[i+delta];
+           
+        }
+        while (i++ < _size_of_vector)
+        {
+            _alloc.destroy(_start + i);
+           
+        }
+
+        _size_of_vector-= delta;
+        return (_start + strtInsrt);
+    }
+    void pop_back()
+    {
+        _size_of_vector--;
+		_alloc.destroy(_start +_size_of_vector);
+    }
+    void resize( size_type count, value_type value = value_type() )
+    {
+        while (_capacity < count)
+            reserve(_capacity*2);
+        for (; _size_of_vector < count; _size_of_vector++)
+            _alloc.construct(_start + _size_of_vector, value);
+        for (; _size_of_vector > count;)
+            this->pop_back();
+    }
+    template <class P>
+    void    pre_swap(P &__y , P &_x) 
+    {
+    P __tmp = _x;
+    _x = __y;
+    __y = __tmp;
+    }
+    void swap( Vector& other )
+    {
+        pre_swap(other._size_of_vector ,_size_of_vector);
+        pre_swap(other._alloc ,_alloc);
+        pre_swap(other._capacity ,_capacity);
+        pre_swap(other._start ,_start);
     }
     /////////////////////////// ITERATOR ///////////////////////////////
 

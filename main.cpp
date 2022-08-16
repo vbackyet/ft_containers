@@ -94,7 +94,7 @@ std::cout << "===== Vector =====" << std::endl;
     auto it = c1.begin();
     it = c1.insert(it, 200);
     print(2, c1);
- 
+    c1.swap(c1);
     c1.insert(it, 2, 300);
     print(3, c1);
 
@@ -129,8 +129,22 @@ std::cout << "===== Vector =====" << std::endl;
     c20.push_back(400);
     c10.insert((c10.begin() + 2), c20.begin(), c20.end());
     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
+    std::cout << "\n=================" <<std::endl;
+
+    c10.erase(c10.begin() + 2, c10.begin() + 5);
+
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
+    std::cout << "\n=================" <<std::endl;
+    c10.swap(c20);
 
 
+    c10.assign(23, 6);
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
+    std::cout << "\n=================" <<std::endl;
+
+    c10.assign(1, 3);
+    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
+    std::cout << "\n=================" <<std::endl;
 
 // явная специализация шаблонов
 }

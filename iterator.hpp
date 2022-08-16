@@ -82,8 +82,9 @@ namespace ft
             IteratorForVector &operator--(){ _elem--; return (*this);};
             IteratorForVector operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
             IteratorForVector operator+(int my_change){ _elem = _elem + my_change; return (*this);};
-typename IteratorForVector::reference operator*(void) const { return (*_elem); };
-
+            typename IteratorForVector::reference operator*(void) const { return (*_elem); };
+			bool operator>(IteratorForVector const &it) const {return (_elem > it._elem);};
+			bool operator<(IteratorForVector const &it) const {return (_elem < it._elem);};
             // операторы для указателей
             int operator-(IteratorForVector const &other_iterator)const { return (this->_elem - other_iterator._elem); };
             bool operator>=(IteratorForVector const &other_iterator) const  { return (this->_elem >= other_iterator._elem); };
