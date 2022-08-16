@@ -21,12 +21,14 @@ namespace ft
            typedef typename allocator_type::reference   reference; // указатель 
            typedef typename allocator_type::const_reference   const_reference; // указатель 
            typedef IteratorForVector<T*> iterator;
+           typedef ReverseIteratorForVector<T*> reverse_iterator;
         private:
             size_type _size_of_vector; // размер вектора 
             allocator_type _alloc; //  
             size_type _capacity; // вместительность 
             pointer  _start; // начало выделенной памяти на вектор
-            // pointer _p;
+            reverse_iterator _r_start;
+            
     /////////////////////////// CONSTRUCTOR ///////////////////////////////
     // консруктор нормальный vector <string> ivector;
     public:
@@ -308,13 +310,18 @@ namespace ft
     /////////////////////////// ITERATOR ///////////////////////////////
 
 			iterator begin(){ return (_start); };
-			// const_iterator begin() const { return (_p); }
+			const_iterator begin() const { return (_start); }
 			iterator end(){ return (_start + _size_of_vector); }
-			// const_iterator end() const{ return (_p + _size_of_vector);}
-			// reverse_iterator rbegin(){return reverse_iterator(end());};
-			// const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
-			// reverse_iterator rend(){return reverse_iterator(begin());};
-			// const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
+			const_iterator end() const{ return (_start + _size_of_vector);}
+
+            /// rbegin
+			reverse_iterator rbegin(){return reverse_iterator(end());};
+			const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
+			reverse_iterator rend(){return reverse_iterator(begin());};
+			const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
+
+
+            // rend
     /////////////////////////// DESTRUCTOR ///////////////////////////////
         ~Vector()
         { std::cout << "Деструктор вызван" << std::endl;
