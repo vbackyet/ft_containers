@@ -226,11 +226,27 @@ namespace ft
     {
 
 
-        pos--;
-
-        int size_of_vec = last - first;
-
-        std::cout<< size_of_vec << " puk "<< std::endl;
+        int count = last - first;
+        int insertStart = pos - this->begin();
+        int oldEnd = _size_of_vector - 1;
+        int newEnd = _size_of_vector - 1 + count;
+        if (_capacity*2 < (_size_of_vector + count))
+            reserve(_size_of_vector + count);
+        else if (_capacity < (_size_of_vector + count))
+            reserve(_capacity*2);
+        // std::cout<< size_of_vec << " puk "<< std::endl;
+        ///////////// cycle 
+        while(newEnd > (insertStart + (int)count - 1))
+        {
+            _start[newEnd--] = _start[oldEnd--];
+            // i++;
+        }
+        // std::cout<< "|" << insertStart << "| :unsertStart " << newEnd << " newEnd " << std::endl;
+        while(newEnd >= insertStart)
+        {
+            _start[newEnd--] = *first++;
+        }
+        _size_of_vector += count;
 
         
     }
