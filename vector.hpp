@@ -22,6 +22,8 @@ namespace ft
            typedef typename allocator_type::const_reference   const_reference; // указатель 
            typedef IteratorForVector<T*> iterator;
            typedef ReverseIteratorForVector<T*> reverse_iterator;
+            typedef IteratorForVector<const T*> const_iterator;
+           typedef ReverseIteratorForVector<const T*> const_reverse_iterator;
         private:
             size_type _size_of_vector; // размер вектора 
             allocator_type _alloc; //  
@@ -84,13 +86,24 @@ namespace ft
             _alloc.construct(_start + _size_of_vector, element_to_insert );
             _size_of_vector++; 
         }
-        bool operator!=(Vector& x)
-        {
-            if (x._start != _start)
-                return true;
-            return false;
-        }
 
+        template <class TF, class AllocF>
+        friend bool operator==(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
+        {
+            if(lhs._size_of_vector != rhs._size_of_vector)
+                return false;
+            for( size_type i = 0; i < lhs._size_of_vector; i++)
+            {
+                if (lhs[i] != rhs[i])
+                    return false;
+            }
+            return true;
+        }
+        template <class TF, class AllocF>
+        friend bool operator!=(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
+        {
+            return (!(lhs == rhs));
+        }
         // Vector& operator= (const Vector& x)
         // {
         //     if (this != &x)
@@ -159,14 +172,31 @@ namespace ft
         else
             throw std::invalid_argument("");
     }
-    const_reference at( size_type pos ) const { return _start.at(pos);}
-    const_reference operator[]( size_type pos ) const    { return _start.at(pos);}
+
+    const_reference at (size_type n) const {
+        if (_size_of_vector > 0)
+            return(_start[n]);
+        else 
+            throw std::invalid_argument("");
+    }
+
+    const_reference operator[](size_type n) const {
+        if (_size_of_vector > 0)
+            return(_start[n]);
+        else 
+            throw std::invalid_argument("");
+    }
     reference front()    {        return *_start;    }
     const_reference front() const {return *_start;}
     reference back() { return *(_start + _size_of_vector - 1);}
     const_reference back() const { return *(_start + _size_of_vector - 1);}
     T* data() { return _start; }
     const T* data() const { return _start; }
+
+    		// reverse_iterator rbegin(){return reverse_iterator(end());};
+			// const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
+			// reverse_iterator rend(){return reverse_iterator(begin());};
+			// const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
 
     /////////////////////////// MODIFIERS ///////////////////////////////
     void clear()

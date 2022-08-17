@@ -73,28 +73,83 @@ namespace ft
             IteratorForVector(typename IteratorForVector::pointer vecPoint):_elem(vecPoint){};
 
 			~IteratorForVector() {};
-            bool operator!=(IteratorForVector &right)
-            {
-                return (_elem != right._elem);
-            }
+
+            bool operator==(IteratorForVector &right){return (_elem == right._elem);}
+            bool operator!=(IteratorForVector &right){return (_elem != right._elem);}
+            typename IteratorForVector::reference operator*(void) const { return (*_elem); };
+            typename IteratorForVector::pointer operator->(void) const { return &(*_elem); };
+
             IteratorForVector &operator++(){ _elem++; return (*this);};
             IteratorForVector operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
             IteratorForVector &operator--(){ _elem--; return (*this);};
             IteratorForVector operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
             IteratorForVector operator+(int my_change){ _elem = _elem + my_change; return (*this);};
             IteratorForVector operator-(int my_change){ _elem = _elem - my_change; return (*this);};
-            typename IteratorForVector::reference operator*(void) const { return (*_elem); };
+            IteratorForVector &operator+=(int my_change){ _elem = _elem + my_change; return (*this);};
+            IteratorForVector &operator-=(int my_change){ _elem = _elem - my_change; return (*this);};
+            IteratorForVector &operator[](int my_change){ _elem = _elem + my_change; return (*this);};
 			bool operator>(IteratorForVector const &it) const {return (_elem > it._elem);};
 			bool operator<(IteratorForVector const &it) const {return (_elem < it._elem);};
             // операторы для указателей
             int operator-(IteratorForVector const &other_iterator)const { return (this->_elem - other_iterator._elem); };
             int operator+(IteratorForVector const &other_iterator)const { return (this->_elem + other_iterator._elem); };
             bool operator>=(IteratorForVector const &other_iterator) const  { return (this->_elem >= other_iterator._elem); };
+            bool operator<=(IteratorForVector const &other_iterator) const  { return (this->_elem <= other_iterator._elem); };
 			// iterator_type base() const {return _elem;}
 
-			// typename IteratorForVector::reference operator*(void) const { return (*_elem); };
-			// typename IteratorForVector::pointer operator->(void) const { return &(*_elem); };
             friend std::ostream &operator<<(std::ostream &os, const IteratorForVector &_date) {
+                return os  << _date._elem;}
+
+        private:
+            iterator_type _elem;
+
+
+
+
+    };
+
+    template <class T>
+    struct ReverseIteratorForVector : ft::iterator<typename ft::iterator_traits<T>::iterator_category, typename ft::iterator_traits<T>::value_type >
+    {
+
+        public:
+            typedef T iterator_type;
+            // typedef    pointer;
+        	ReverseIteratorForVector():_elem(0){};
+            
+            // template <class _Up>// для const T*
+			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
+            // T base() const  { return _elem; }
+
+			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
+            ReverseIteratorForVector(typename ReverseIteratorForVector::pointer vecPoint):_elem(vecPoint){};
+
+			~ReverseIteratorForVector() {};
+
+            bool operator==(ReverseIteratorForVector &right){return (_elem == right._elem);}
+            bool operator!=(ReverseIteratorForVector &right){return (_elem != right._elem);}
+            typename ReverseIteratorForVector::reference operator*(void) const { return (*_elem); };
+            typename ReverseIteratorForVector::pointer operator->(void) const { return &(*_elem); };
+
+            ReverseIteratorForVector &operator++(){ _elem--; return (*this);};
+            ReverseIteratorForVector operator++(int){ ReverseIteratorForVector temp(*this) ;_elem--; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
+            ReverseIteratorForVector &operator--(){ _elem++; return (*this);};
+            ReverseIteratorForVector operator--(int){ ReverseIteratorForVector temp(*this) ;_elem++; return (temp);};
+            ReverseIteratorForVector operator+(int my_change){ _elem = _elem - my_change; return (*this);};
+            ReverseIteratorForVector operator-(int my_change){ _elem = _elem + my_change; return (*this);};
+            ReverseIteratorForVector &operator+=(int my_change){ _elem = _elem - my_change; return (*this);};
+            ReverseIteratorForVector &operator-=(int my_change){ _elem = _elem + my_change; return (*this);};
+            ReverseIteratorForVector &operator[](int my_change){ _elem = _elem + my_change; return (*this);};
+			bool operator>(ReverseIteratorForVector const &it) const {return (_elem > it._elem);};
+			bool operator<(ReverseIteratorForVector const &it) const {return (_elem < it._elem);};
+            // операторы для указателей
+            int operator-(ReverseIteratorForVector const &other_iterator)const { return (this->_elem + other_iterator._elem); };
+            int operator+(ReverseIteratorForVector const &other_iterator)const { return (this->_elem - other_iterator._elem); };
+            bool operator>=(ReverseIteratorForVector const &other_iterator) const  { return (this->_elem >= other_iterator._elem); };
+            bool operator<=(ReverseIteratorForVector const &other_iterator) const  { return (this->_elem <= other_iterator._elem); };
+			// iterator_type base() const {return _elem;}
+
+            friend std::ostream &operator<<(std::ostream &os, const ReverseIteratorForVector &_date) {
                 return os  << _date._elem;}
 
         private:

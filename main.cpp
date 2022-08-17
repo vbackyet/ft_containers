@@ -125,26 +125,10 @@ std::cout << "===== Vector =====" << std::endl;
 
 
     ft::Vector<int> c20(2);
-    c20.push_back(400);
-    c20.push_back(400);
-    c10.insert((c10.begin() + 2), c20.begin(), c20.end());
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
-    std::cout << "\n=================" <<std::endl;
-
-    c10.erase(c10.begin() + 2, c10.begin() + 5);
-
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
-    std::cout << "\n=================" <<std::endl;
-    c10.swap(c20);
-
-
-    c10.assign(23, 6);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
-    std::cout << "\n=================" <<std::endl;
-
-    c10.assign(1, 3);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << "// ";}
-    std::cout << "\n=================" <<std::endl;
-
+    ft::Vector<int> c30(2);
+    c20.assign(25, 7);
+    c30.assign(25, 7);
+    std::cout << (c20 == c30) << " true "<<std::endl;
+    std::cout << (c20 != c30) << " false "<< std::endl;
 // явная специализация шаблонов
 }
