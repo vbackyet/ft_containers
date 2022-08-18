@@ -61,6 +61,7 @@ namespace ft
     {
 
         public:
+
             typedef T iterator_type;
             // typedef    pointer;
         	IteratorForVector():_elem(0){};
@@ -76,8 +77,9 @@ namespace ft
 
             bool operator==(IteratorForVector &right){return (_elem == right._elem);}
             bool operator!=(IteratorForVector &right){return (_elem != right._elem);}
-            typename IteratorForVector::reference operator*(void) const { return (*_elem); };
-            typename IteratorForVector::pointer operator->(void) const { return &(*_elem); };
+			typename IteratorForVector::reference operator*(void) const { return (*_elem); };
+			typename IteratorForVector::pointer operator->(void) const { return &(*_elem); };
+
 
             IteratorForVector &operator++(){ _elem++; return (*this);};
             IteratorForVector operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
@@ -130,6 +132,8 @@ namespace ft
             bool operator!=(ReverseIteratorForVector &right){return (_elem != right._elem);}
             typename ReverseIteratorForVector::reference operator*(void) const { return (*_elem); };
             typename ReverseIteratorForVector::pointer operator->(void) const { return &(*_elem); };
+
+
 
             ReverseIteratorForVector &operator++(){ _elem--; return (*this);};
             ReverseIteratorForVector operator++(int){ ReverseIteratorForVector temp(*this) ;_elem--; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла

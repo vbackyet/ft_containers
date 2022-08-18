@@ -127,8 +127,17 @@ std::cout << "===== Vector =====" << std::endl;
     ft::Vector<int> c20(2);
     ft::Vector<int> c30(2);
     c20.assign(25, 7);
-    c30.assign(25, 7);
+    c30.assign(25, 8);
     std::cout << (c20 == c30) << " true "<<std::endl;
-    std::cout << (c20 != c30) << " false "<< std::endl;
+    std::cout << (c20 > c30) << " true "<< std::endl;
+
+    ft::Vector<int>::iterator it10;
+    it10 = c20.begin();
+
+
+
+
+    // std::cout << (c20 < c30) << " true "<< std::endl;
+    // std::cout << (c20 > c30) << " true "<< std::endl;
 // явная специализация шаблонов
 }

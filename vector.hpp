@@ -104,13 +104,16 @@ namespace ft
         {
             return (!(lhs == rhs));
         }
-        // Vector& operator= (const Vector& x)
-        // {
-        //     if (this != &x)
-		// 	    this->assign(other.begin(), other.end());
-		//     return *this;
-        // }
-        
+        template< class TF, class AllocF >
+        friend bool operator>(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
+        {
+            return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+        }
+        template< class TF, class AllocF >
+        friend bool operator<(const ft::Vector<TF,AllocF>& rhs, const ft::Vector<TF,AllocF>& lhs)
+        {
+            return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+        }
         // консруктор копирования 
         explicit Vector(const Vector& prev_vector)
             { 
