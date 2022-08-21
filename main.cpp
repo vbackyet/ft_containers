@@ -8,7 +8,7 @@
 #include "stack.hpp"
 # include <iterator>
 #include "vector.hpp"
-
+#include "tree.hpp"
 
 void print(int id, const std::vector<int>& container)
 {
@@ -69,70 +69,81 @@ std::cout << "===== Vector =====" << std::endl;
 
 
 
-    std::cout << "===== std :: assign =====" << std::endl;
+    // std::cout << "===== std :: assign =====" << std::endl;
 
-    std::vector<char> characters;
+    // std::vector<char> characters;
  
  
-    characters.assign(5, 'a');
+    // characters.assign(5, 'a');
  
-    std::vector<int> myvector2;
-    for (int i=1; i<=5; i++) myvector2.push_back(10);
-    std::vector<int>::iterator it2;
+    // std::vector<int> myvector2;
+    // for (int i=1; i<=5; i++) myvector2.push_back(10);
+    // std::vector<int>::iterator it2;
 
 
 
 
-    const std::string extra(6, 'b');
-    characters.assign(extra.begin(), extra.end());
+    // const std::string extra(6, 'b');
+    // characters.assign(extra.begin(), extra.end());
 
  
 
-    std::vector<int> c1(3, 100);
-    print(1, c1);
+    // std::vector<int> c1(3, 100);
+    // print(1, c1);
  
-    auto it = c1.begin();
-    it = c1.insert(it, 200);
-    print(2, c1);
-    c1.swap(c1);
-    c1.insert(it, 2, 300);
-    print(3, c1);
+    // auto it = c1.begin();
+    // it = c1.insert(it, 200);
+    // print(2, c1);
+    // c1.swap(c1);
+    // c1.insert(it, 2, 300);
+    // print(3, c1);
 
-    std::vector<int> c2(2, 400);
-    c1.insert(std::next(it, 2), c2.begin(), c2.end());
-    print(4, c1);
+    // std::vector<int> c2(2, 400);
+    // c1.insert(std::next(it, 2), c2.begin(), c2.end());
+    // print(4, c1);
     
 
 
     ///////////////my_vector /////////////////
-    ft::Vector<int> c10(3);
-    int i = 100;
-    c10.push_back(i);
-    c10.push_back(100);
-    c10.push_back(100);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << &c10[i] << " ";}
-    std::cout << "\n=================" <<std::endl;
-    ft::Vector<int>::iterator it1;
-     it1 = c10.begin();
-     for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
-     std::cout << "\n=================" <<std::endl;
-    it1 = c10.insert(it1, 200);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
-     std::cout << "\n=================" <<std::endl;
-    c10.insert(it1, 2, 300);
-    for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
-    std::cout << "\n=================" <<std::endl;
+    // ft::Vector<int> c10(3);
+    // int i = 100;
+    // c10.push_back(i);
+    // c10.push_back(100);
+    // c10.push_back(100);
+    // for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << &c10[i] << " ";}
+    // std::cout << "\n=================" <<std::endl;
+    // ft::Vector<int>::iterator it1;
+    //  it1 = c10.begin();
+    //  for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
+    //  std::cout << "\n=================" <<std::endl;
+    // it1 = c10.insert(it1, 200);
+    // for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
+    //  std::cout << "\n=================" <<std::endl;
+    // c10.insert(it1, 2, 300);
+    // for(int i = 0 ; i < (int ) c10.size() ; i++) {std::cout << c10[i] << " ";}
+    // std::cout << "\n=================" <<std::endl;
 
 
-    ft::Vector<int> c20(2);
-    ft::Vector<int> c30(2);
-    c20.assign(25, 7);
-    c30.assign(25, 8);
-    std::cout << (c20 == c30) << " true "<<std::endl;
-    std::cout << (c20 > c30) << " true "<< std::endl;
+    // ft::Vector<int> c20(2);
+    // ft::Vector<int> c30(2);
+    // c20.assign(25, 7);
+    // c30.assign(25, 8);
+    // std::cout << (c20 == c30) << " true "<<std::endl;
+    // std::cout << (c20 > c30) << " true "<< std::endl;
+    ft::Tree<int> *my_tree = new ft::Tree<int>();
 
-    ft::Vector<int>::iterator it10;
-    it10 = c20.begin();
+    my_tree->add(new ft::Node<int>(10));
+    my_tree->add(new ft::Node<int>(20));
+    my_tree->add(new ft::Node<int>(30));
+    my_tree->add(new ft::Node<int>(6));
+    my_tree->add(new ft::Node<int>(12));
+     my_tree->add(new ft::Node<int>(13));
+     my_tree->add(new ft::Node<int>(11));
+    ft::Node<int> *head = my_tree->head;
+    my_tree->print_tree(head);
+
+
+
 
 
 
