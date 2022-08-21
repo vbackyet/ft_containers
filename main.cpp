@@ -9,7 +9,7 @@
 # include <iterator>
 #include "vector.hpp"
 #include "tree.hpp"
-
+#include <vector>
 void print(int id, const std::vector<int>& container)
 {
     std::cout << id << ". ";
@@ -128,20 +128,23 @@ std::cout << "===== Vector =====" << std::endl;
     // ft::Vector<int> c30(2);
     // c20.assign(25, 7);
     // c30.assign(25, 8);
-    // std::cout << (c20 == c30) << " true "<<std::endl;
-    // std::cout << (c20 > c30) << " true "<< std::endl;
+    // // std::cout << (c20 == c30) << " true "<<std::endl;
+    // std::cout << (c20 < c30) << " true "<< std::endl;
+
+
+
+
     ft::Tree<int> *my_tree = new ft::Tree<int>();
 
-    my_tree->add(new ft::Node<int>(10));
-    my_tree->add(new ft::Node<int>(20));
-    my_tree->add(new ft::Node<int>(30));
-    my_tree->add(new ft::Node<int>(6));
-    my_tree->add(new ft::Node<int>(12));
-     my_tree->add(new ft::Node<int>(13));
-     my_tree->add(new ft::Node<int>(11));
+    my_tree->add(new ft::Node<int>(2));
+    my_tree->add(new ft::Node<int>(134));
+    my_tree->add(new ft::Node<int>(1));
+    my_tree->add(new ft::Node<int>(13));
+    my_tree->add(new ft::Node<int>(9));
+     my_tree->add(new ft::Node<int>(15));
+     my_tree->add(new ft::Node<int>(23));
     ft::Node<int> *head = my_tree->head;
     my_tree->print_tree(head);
-
 
 
 

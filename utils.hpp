@@ -18,7 +18,7 @@ namespace ft
     //   constexpr operator value_type() const { return value; }
     };
   /// The type used as a compile-time boolean with true value.
-  typedef integral_constant< true>     true_type;
+  typedef integral_constant<true>     true_type;
 
   /// The type used as a compile-time boolean with false value.
   typedef integral_constant<false>    false_type;

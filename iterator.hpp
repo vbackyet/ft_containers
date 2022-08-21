@@ -6,9 +6,6 @@
 #include <memory>
 
 
-
-
-
 namespace ft
 {
     struct random_access_iterator_tag {};
@@ -35,7 +32,7 @@ namespace ft
 		typedef T									value_type;
 		typedef T*									pointer;
 		typedef T&									reference;
-		typedef ft::random_access_iterator_tag		iterator_category;
+		typedef std::random_access_iterator_tag		iterator_category;
 	};
 	
 	template< class T >
@@ -45,8 +42,9 @@ namespace ft
 		typedef T									value_type;
 		typedef const T*							pointer;
 		typedef const T&							reference;
-		typedef ft::random_access_iterator_tag		iterator_category;
+		typedef std::random_access_iterator_tag		iterator_category;
 	};
+    
     template <class Category ,class T, class pointer_ = T*, class reference_ = T&, class distance_ = ptrdiff_t >
     struct iterator
     {
@@ -56,28 +54,27 @@ namespace ft
        typedef reference_ reference;
        typedef distance_	Distance;
     };
+
     template <class T>
-    struct IteratorForVector : ft::iterator<typename ft::iterator_traits<T>::iterator_category, typename ft::iterator_traits<T>::value_type >
+    struct IteratorForVector : ft::iterator<std::random_access_iterator_tag, T>
     {
 
         public:
 
-            typedef T iterator_type;
+            typedef T* iterator_type;
             // typedef    pointer;
-        	IteratorForVector():_elem(0){};
-            
-            // template <class _Up>// для const T*
-			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
-            // T base() const  { return _elem; }
+        	IteratorForVector(const iterator_type it = NULL):_elem(it){};
+
+            IteratorForVector(const IteratorForVector& other) : _elem(other._elem) {}
 
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
-            IteratorForVector(typename IteratorForVector::pointer vecPoint):_elem(vecPoint){};
+            // IteratorForVector(typename IteratorForVector::pointer vecPoint):_elem(vecPoint){};
 
 			~IteratorForVector() {};
 
             bool operator==(IteratorForVector &right){return (_elem == right._elem);}
             bool operator!=(IteratorForVector &right){return (_elem != right._elem);}
-			typename IteratorForVector::reference operator*(void) const { return (*_elem); };
+			typename IteratorForVector::reference operator*(void) { return (*_elem); };
 			typename IteratorForVector::pointer operator->(void) const { return &(*_elem); };
 
 

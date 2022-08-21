@@ -20,9 +20,9 @@ namespace ft
            typedef typename allocator_type::pointer   pointer; // указатель 
            typedef typename allocator_type::reference   reference; // указатель 
            typedef typename allocator_type::const_reference   const_reference; // указатель 
-           typedef IteratorForVector<T*> iterator;
+           typedef IteratorForVector<T> iterator;
            typedef ReverseIteratorForVector<T*> reverse_iterator;
-            typedef IteratorForVector<const T*> const_iterator;
+           typedef IteratorForVector<const T> const_iterator;
            typedef ReverseIteratorForVector<const T*> const_reverse_iterator;
         private:
             size_type _size_of_vector; // размер вектора 
@@ -342,9 +342,14 @@ namespace ft
     }
     /////////////////////////// ITERATOR ///////////////////////////////
 
-			iterator begin(){ return (_start); };
-			const_iterator begin() const { return (_start); }
-			iterator end(){ return (_start + _size_of_vector); }
+			// iterator begin(){ return (_start); };
+
+            iterator begin(){ return iterator(_start); };
+            const_iterator begin() const { return const_iterator(_start); };
+			
+            // const_iterator begin() const { return (_start); }
+			
+            iterator end(){ return (_start + _size_of_vector); }
 			const_iterator end() const{ return (_start + _size_of_vector);}
 
             /// rbegin
