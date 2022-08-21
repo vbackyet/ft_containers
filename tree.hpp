@@ -73,7 +73,6 @@ namespace ft
             {
                 
 				if (z->parent == z->parent->parent->left){ // parent is left child
-                    std::cout << "parent is left child " << std::endl;
 					y = z->parent->parent->right;
 					if (y->color == RED){ // y is red case
 						z->parent->color = BLACK;
@@ -89,14 +88,11 @@ namespace ft
 						rightRotate(z->parent->parent);}
 				}
 				else {//parent is right child 
-                    std::cout << "parent is right child " << std::endl;
 					y = z->parent->parent->left; // то же самое только зеркально
-                    std::cout << "Done" << std::endl;
 					if (y->color == RED){ // y (uncle) is red case
 						z->parent->color = BLACK;
 						y->color = BLACK;
 						z->parent->parent->color = RED;
-						z = z->parent->parent;std::cout << "puk" << std::endl;
                         }
 					else {
 						if (z == z->parent->left){ //y is black case, triangle relationship
@@ -153,10 +149,6 @@ namespace ft
                     //     { paste_node(curr_node, new_node);break;}
                 }
             }
-        };
-        void print_node(ft::Node<T> *my_node)
-        {
-            std::cout << my_node->keyValue << "     ";
         };
         void print_tree(ft::Node<T> *my_node)
         {
