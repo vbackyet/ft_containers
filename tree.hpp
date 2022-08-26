@@ -23,7 +23,7 @@ namespace ft
 		~Node(){};
     };
 
-    template<class T>
+    template<class T, class Allocator>
     class Tree
     {
     public:
@@ -31,6 +31,7 @@ namespace ft
         ft::Node<T> *head = NULL;
         Tree(){};
         ~Tree(){};
+        Allocator					_alloc;
         int _size = 0;
 
         void rightRotate(ft::Node<T>  *x)
@@ -107,6 +108,12 @@ namespace ft
 			}
             head->color = BLACK; // case 0
             }
+
+            ft::Node<T>* find_min(ft::Node<T>* x) const {
+			while (x->left->isNil != true)
+				x = x->left;
+			return (x);
+		}
         void add(ft::Node<T> *new_node)
         {
             if (head == NULL)
@@ -160,6 +167,107 @@ namespace ft
 		
             // std::cout <<    std::endl;
         };
+        void DeleteFixup(ft::Node<T> *x)
+        {
+			ft::Node<T> *w;
+
+			while (x != head && x->color == BLACK){
+				if (x == x->parent->left){
+					w = x->parent->right;
+					if (w->color == RED){
+						w->color = BLACK;
+						x->parent->color = RED;
+						leftRotate(x->parent);
+						w = x->parent->right; }
+					if (w->left->color == BLACK && w->right->color == BLACK){
+						w->color = RED;
+						x = x->parent; }
+					else {
+						if (w->right->color == BLACK) {
+							w->left->color = BLACK;
+							w->color = RED;
+							rightRotate(w);
+							w = x->parent->right; }
+						w->color = x->parent->color;
+						x->parent->color = BLACK;
+						w->right->color = BLACK;
+						leftRotate(x->parent);
+						x = head;
+					}		
+				}
+				else {
+					w = x->parent->left;
+					if (w->color == RED){
+						w->color = BLACK;
+						x->parent->color = RED;
+						rightRotate(x->parent);
+						w = x->parent->left; }
+					if (w->right->color == BLACK && w->left->color == BLACK){
+						w->color = RED;
+						x = x->parent; }
+					else {
+						if (w->left->color == BLACK) {
+							w->right->color = BLACK;
+							w->color = RED;
+							leftRotate(w);
+							w = x->parent->left; }
+						w->color = x->parent->color;
+						x->parent->color = BLACK;
+						w->left->color = BLACK;
+						rightRotate(x->parent);
+						x = head;}
+				}
+			}
+			x->color = BLACK;
+		
+        }
+        void transplant_node(ft::Node<T> *node_to_delete, ft::Node<T> *node_to_transplant)
+        {
+			if (node_to_delete->parent == 0){
+				head = node_to_transplant;} 
+			else if (node_to_delete == node_to_delete->parent->left)
+				node_to_delete->parent->left = node_to_transplant;
+			else
+				node_to_delete->parent->right = node_to_transplant;
+			node_to_transplant->parent = node_to_delete->parent;
+        }
+        void deleteNode(ft::Node<T> *node_to_delete)
+        {
+            ft::Node<T> *x;
+            ft::Node<T> *y;
+            int deleteOrigCOlor = node_to_delete->color;
+            if (node_to_delete->left->isNil)// если есть только правый ребенок
+            {
+                x = node_to_delete->right; 
+                transplant_node(node_to_delete, node_to_delete->right);
+            }            
+            else if (node_to_delete->right->isNil)// если есть только левый ребенок
+            {
+                x = node_to_delete->left; 
+                transplant_node(node_to_delete, node_to_delete->left);
+            }
+            else // если есть оба ребенка 
+            {
+                y = find_min(node_to_delete->right);
+                deleteOrigCOlor = y->color; // что вставляем(цвет)
+                // transplant_node(node_to_delete, node_to_delete->left);
+                x = node_to_delete->right;
+				if (y->parent == node_to_delete)
+					x->parent = y;
+				else{
+					transplant_node(y, y->right);
+					y->right = node_to_delete->right;
+					y->right->parent = y;}
+				transplant_node(node_to_delete, y);
+				y->left = node_to_delete->left;
+				y->left->parent = y;
+				y->color = node_to_delete->color; }
+			if (deleteOrigCOlor == BLACK)
+				DeleteFixup(x);
+            // _alloc.destroy(node_to_delete);
+			// _alloc.deallocate(node_to_delete, sizeof(ft::Node<T>));
+            
+        }
         void printBT(const std::string& prefix, const ft::Node<T>* nodeV, bool isLeft) const
 		{
             std::cout << prefix;

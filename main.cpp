@@ -134,17 +134,19 @@ std::cout << "===== Vector =====" << std::endl;
 
 
 
-    ft::Tree<int> *my_tree = new ft::Tree<int>();
-
+    ft::Tree<int, std::allocator<int>> *my_tree = new ft::Tree<int, std::allocator<int>>();
+    ft::Node<int> *node2 = new ft::Node<int>(23);
     my_tree->add(new ft::Node<int>(2));
-    my_tree->add(new ft::Node<int>(134));
+    my_tree->add(node2);
     my_tree->add(new ft::Node<int>(1));
     my_tree->add(new ft::Node<int>(13));
     my_tree->add(new ft::Node<int>(9));
-     my_tree->add(new ft::Node<int>(15));
-     my_tree->add(new ft::Node<int>(23));
+    my_tree->add(new ft::Node<int>(15));
+    my_tree->add(new ft::Node<int>(134));
     ft::Node<int> *head = my_tree->head;
     my_tree->print_tree(head);
+    my_tree->deleteNode(node2);
+     my_tree->print_tree(head);
 
 
 
