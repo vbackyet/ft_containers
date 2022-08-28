@@ -43,7 +43,7 @@ namespace ft
                 bool operator()(const value_type& __x, const value_type& __y) const { return comp(__x.first, __y.first); }
         };
     
-    private:
+    protected:
         typedef typename Allocator::template rebind< ft::Node<value_type> >::other		allocatorNode;
         key_compare _comp; 
         allocator_type _alloc;
@@ -57,8 +57,8 @@ namespace ft
         {
             insert(first, last);
         };
-        Map( const Map& other x):_comp(x._comp), _tree(value_compare(x._comp)){ _tree = x._tree; };
-        ~Map();
+        Map( const Map& x):_comp(x._comp), _tree(value_compare(x._comp)){ _tree = x._tree; };
+        ~Map(){};
     };
     
 };

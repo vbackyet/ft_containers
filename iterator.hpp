@@ -246,8 +246,19 @@ namespace ft
 				IteratorForMap tem(*this);
 				--(*this);
 				return tem;
-			}
+			};
 			
+            template <class Iter1>
+            friend
+            bool operator==(const IteratorForMap<Iter1 >& x, const IteratorForMap<Iter1>& y) {
+                return (x._iter == y._iter);
+            };
+
+            template <class Iter1 >
+            friend
+            bool operator!=(const IteratorForMap<Iter1>& x, const IteratorForMap<Iter1>& y) {
+                return !(x == y);
+            };
             
         
     };
