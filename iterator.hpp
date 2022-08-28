@@ -161,5 +161,21 @@ namespace ft
 
     };
 
+
+    template <class T>
+    struct IteratorForMap
+    {
+        public:
+            typedef T iterator_type;
+            typedef typename iterator_type::pair_type   value_type;
+            typedef typename iterator_type::pair_type*   pointer;
+            typedef typename iterator_type::pair_type   reference;
+			typedef const iterator_type::pair_type& 					const_reference;
+			typedef const iterator_type::pair_type* 					const_pointer;
+			typedef bidirectional_iterator_tag	iterator_category;
+			typedef ptrdiff_t					difference_type;
+    };
+
+
 }
 

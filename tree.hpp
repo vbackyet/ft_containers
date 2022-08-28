@@ -28,6 +28,7 @@ namespace ft
     {
     public:
         // ft::Node<T> *head = new ft::Node<T>();
+		typedef T pair_type;
         ft::Node<T> *head = NULL;
         Tree(){};
         ~Tree(){};
