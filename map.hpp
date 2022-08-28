@@ -30,7 +30,6 @@ namespace ft
 
         typedef ft::ReverseIteratorForVector<iterator>														reverse_iterator;
 		typedef ft::ReverseIteratorForVector<const_iterator>												const_reverse_iterator;
-        typedef 
         class value_compare: public std::binary_function<value_type, value_type, bool>
         {
             friend class ft::Map<Key, T, Compare, Allocator>;
