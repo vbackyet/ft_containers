@@ -79,6 +79,8 @@
         "random": "cpp",
         "ratio": "cpp",
         "semaphore": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

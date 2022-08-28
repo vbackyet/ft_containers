@@ -23,7 +23,7 @@ namespace ft
 		~Node(){};
     };
 
-    template<class T, class Allocator>
+    template<class T, class Allocator, class Comparator>
     class Tree
     {
     public:
@@ -32,7 +32,8 @@ namespace ft
         Tree(){};
         ~Tree(){};
         Allocator					_alloc;
-        int _size = 0;
+        Comparator					_compare;
+        size_t _size = 0;
 
         void rightRotate(ft::Node<T>  *x)
 		{

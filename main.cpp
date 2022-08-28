@@ -10,6 +10,10 @@
 #include "vector.hpp"
 #include "tree.hpp"
 #include <vector>
+#include <map>
+#include "map.hpp"
+#include <string>
+#include <string_view>
 void print(int id, const std::vector<int>& container)
 {
     std::cout << id << ". ";
@@ -19,6 +23,21 @@ void print(int id, const std::vector<int>& container)
     std::cout << '\n';
 }
 
+template<typename Key, typename Value>
+std::ostream& operator<<(std::ostream& os, ft::Map<Key, Value> const& m)
+{
+   os << "{ ";
+   for(auto const& p: m)
+        os << '(' << p.first << ':' << p.second << ") ";
+   return os << "}\n";
+}
+
+struct Point { double x, y; };
+struct PointCmp {
+    bool operator()(const Point& lhs, const Point& rhs) const {
+        return lhs.x < rhs.x; // NB. intentionally ignores y
+    }
+};
 
 // void print(int id, ft::Vector<int>& container)
 // {
@@ -55,15 +74,6 @@ int main(void)
 
 
 // 	//####################################################
-
-
-
-std::cout << "===== Vector =====" << std::endl;
-    std::vector<int> v;
- 
-    // Add two more integers to vector
-    v.push_back(25);
-    v.push_back(13);
  
     // Print out the vector
 
@@ -134,26 +144,60 @@ std::cout << "===== Vector =====" << std::endl;
 
 
 
-    ft::Tree<int, std::allocator<int>> *my_tree = new ft::Tree<int, std::allocator<int>>();
-    ft::Node<int> *node2 = new ft::Node<int>(23);
-    my_tree->add(new ft::Node<int>(2));
-    my_tree->add(node2);
-    my_tree->add(new ft::Node<int>(1));
-    my_tree->add(new ft::Node<int>(13));
-    my_tree->add(new ft::Node<int>(9));
-    my_tree->add(new ft::Node<int>(15));
-    my_tree->add(new ft::Node<int>(134));
-    ft::Node<int> *head = my_tree->head;
-    my_tree->print_tree(head);
-    my_tree->deleteNode(node2);
-     my_tree->print_tree(head);
+    // ft::Tree<int, std::allocator<int>> *my_tree = new ft::Tree<int, std::allocator<int>>();
+    // ft::Node<int> *node2 = new ft::Node<int>(23);
+    // my_tree->add(new ft::Node<int>(2));
+    // my_tree->add(node2);
+    // my_tree->add(new ft::Node<int>(1));
+    // my_tree->add(new ft::Node<int>(13));
+    // my_tree->add(new ft::Node<int>(9));
+    // my_tree->add(new ft::Node<int>(15));
+    // my_tree->add(new ft::Node<int>(134));
+    // ft::Node<int> *head = my_tree->head;
+    // my_tree->print_tree(head);
+    // my_tree->deleteNode(node2);
+    //  my_tree->print_tree(head);
+
+    // 
+
+std::cout << "===== MAp stNDART=====" << std::endl;
+  // (1) Default constructor
+  std::map<std::string, int> map1;
+  map1["something"] = 69;
+  map1["anything"] = 199;
+  map1["that thing"] = 50;
+  std::cout << "map1 = " << map1;
+ 
+  // (4) Range constructor
+  std::map<std::string, int> iter(map1.find("anything"), map1.end());
+  std::cout << "\niter = " << iter;
+  std::cout << "map1 = " << map1;
+ 
+  // (6) Copy constructor
+  std::map<std::string, int> copied(map1);
+  std::cout << "\ncopied = " << copied;
+  std::cout << "map1 = " << map1;
+
+std::cout << "===== Map MINE=====" << std::endl;
+//  std::map<std::string, int> m { {"CPU", 10}, {"GPU", 15}, {"RAM", 20}, };
+  // (1) Default constructor
+  ft::Map<std::string, int> map10;
+  map1["something"] = 69;
+  map1["anything"] = 199;
+  map1["that thing"] = 50;
+  std::cout << "map1 = " << map10;
+ 
+//   // (4) Range constructor
+//   std::map<std::string, int> iter(map10.find("anything"), map10.end());
+//   std::cout << "\niter = " << iter;
+//   std::cout << "map1 = " << map10;
+ 
+//   // (6) Copy constructor
+//   std::map<std::string, int> copied(map10);
+//   std::cout << "\ncopied = " << copied;
+//   std::cout << "map1 = " << map10;
 
 
 
 
-
-
-    // std::cout << (c20 < c30) << " true "<< std::endl;
-    // std::cout << (c20 > c30) << " true "<< std::endl;
-// явная специализация шаблонов
 }
