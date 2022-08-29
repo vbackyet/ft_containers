@@ -115,23 +115,28 @@ int main(void)
 
 
 
-    // ft::Tree<int, std::allocator<int>> *my_tree = new ft::Tree<int, std::allocator<int>>();
+    ft::Tree<int, std::allocator<int>, std::less<int>> my_tree ;
+    ft::Tree<int, std::allocator<int>, std::less<int>> my_tree2;
     // ft::Node<int> *node2 = new ft::Node<int>(23);
-    // my_tree->add(new ft::Node<int>(2));
+    my_tree.add(new ft::Node<int>(2));
+    my_tree.add(new ft::Node<int>(3));
+    my_tree.add(new ft::Node<int>(4));
+    my_tree.add(new ft::Node<int>(5));
     // my_tree->add(node2);
     // my_tree->add(new ft::Node<int>(1));
     // my_tree->add(new ft::Node<int>(13));
     // my_tree->add(new ft::Node<int>(9));
     // my_tree->add(new ft::Node<int>(15));
     // my_tree->add(new ft::Node<int>(134));
-    // ft::Node<int> *head = my_tree->head;
-    // my_tree->print_tree(head);
-    // my_tree->deleteNode(node2);
-    //  my_tree->print_tree(head);
+    my_tree.print_tree(my_tree.head);
+    my_tree2 = my_tree;
+    std::cout << "here" << std::endl;
+    // ft::Node<int> head2 = *my_tree2.head;
+    my_tree2.print_tree(my_tree2.head);
 
     // 
 
-std::cout << "===== MAp stNDART=====" << std::endl;
+  std::cout << "===== MAp staNDART=====" << std::endl;
   // // (1) Default constructor
   // std::map<std::string, int> map1;
   // map1["something"] = 69;
@@ -168,7 +173,8 @@ std::cout << "===== Map MINE=====" << std::endl;
 //   std::cout << "\ncopied = " << copied;
 //   std::cout << "map1 = " << map10;
 
-
+    std::map<int ,int>::iterator it;
+    
 
 
 }

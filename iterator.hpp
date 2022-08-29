@@ -166,15 +166,15 @@ namespace ft
     struct IteratorForMap
     {
         public:
-            typedef T iterator_type;
-            typedef typename iterator_type::pair_type   value_type;
-            typedef typename iterator_type::pair_type*   pointer;
-            typedef typename iterator_type::pair_type   reference;
-			typedef const typename iterator_type::pair_type& 					const_reference;
-			typedef const typename iterator_type::pair_type* 					const_pointer;
+            typedef T* iterator_type;
+            typedef typename T::pair_type   value_type;
+            typedef typename T::pair_type*   pointer;
+            typedef typename T::pair_type&   reference;
+			typedef const typename T::pair_type& 					const_reference;
+			typedef const typename T::pair_type* 					const_pointer;
 			typedef std::bidirectional_iterator_tag	iterator_category;
 			typedef ptrdiff_t					difference_type;
-        private:
+        // private:
             iterator_type _iter;
         public:
             IteratorForMap(T val = nullptr) : _iter(val){};
@@ -197,41 +197,51 @@ namespace ft
 					x = x->right;
 				return (x);
 			}
-            	iterator_type next(){
-				iterator_type y;
-				if (_iter->right->isNil == false)
-					return(min(_iter->right));
-				y = _iter->parent;
-			
-				while (y->parent != 0 && _iter == y->right){ // for case if y is right kid of it's parent
-					_iter = y;
-					y = y->parent;
-				}
-                if (y->parent == 0)
-                    return 0;
-				return (y);
-			}
+
+            iterator_type next(){
+                //  std::cout << "here" << std::endl;
+            iterator_type y;
+            if (_iter->right->isNil == false){
+                return(min(_iter->right));}
+            y = _iter->parent;
+        
+            while (y->parent != 0 && _iter == y->right){ // for case if y is right kid of it's parent
+               
+                _iter = y;
+                y = y->parent;
+            }
+            // if (y->parent == 0)
+            //     return y;
+
+            
+            return (y);
+        }
 
 			iterator_type prev(){
+                // std::cout << "here" << std::endl;
 				iterator_type y;
 
 				if (_iter->isNil == true || _iter->left->isNil == false)
 					return(max(_iter->left));
 				y = _iter->parent;
 				while (y->parent != 0 && _iter == y->left){ // for case if y is left kid of it's parent
+                
 					_iter = y;
 					y = y->parent;}
-                if (y->parent == 0)
-                    return 0;
+                    
+                // if (y->parent == 0)
+                //     return y;
 				return (y);
 			}
 
 			IteratorForMap& operator++() {
+                // std::cout << "here" << std::endl;
 				_iter = next();
 				return (*this);
 			}
 
 			IteratorForMap operator++(int){ 
+                std::cout << "here" << std::endl;
 				IteratorForMap tem(*this);
 				++(*this);
 				return tem;

@@ -25,8 +25,8 @@ namespace ft
 
 
                 //iterators
-        typedef ft::IteratorForMap<ft::Node<value_type>*>      iterator;
-        typedef ft::IteratorForMap<ft::Node<const value_type>*>      const_iterator;
+        typedef ft::IteratorForMap<ft::Node<value_type>>      iterator;
+        typedef ft::IteratorForMap<ft::Node<const value_type>>      const_iterator;
 
         typedef ft::ReverseIteratorForVector<iterator>														reverse_iterator;
 		typedef ft::ReverseIteratorForVector<const_iterator>												const_reverse_iterator;
@@ -59,6 +59,18 @@ namespace ft
         };
         Map( const Map& x):_comp(x._comp), _tree(value_compare(x._comp)){ _tree = x._tree; };
         ~Map(){};
+
+        Map& operator=( const Map& other )
+        {
+            if (*this != other)
+            {
+            _comp = other.comp;
+            _alloc = other.alloc;
+            _tree = other.tree;
+            }
+            return *this;
+        };
+        allocator_type get_allocator() const {return _alloc;}; 
     };
     
 };

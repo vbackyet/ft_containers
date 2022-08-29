@@ -14,6 +14,7 @@ namespace ft
         struct Node* parent;
         struct Node* left;
         struct Node* right;
+		typedef T pair_type;
 		T keyValue; // allocates with notes
 		Node():color(BLACK), isNil(1),parent(0), left(0), right(0){}; //for nil
 		Node(T pair):color(RED), isNil(0), parent(0), left(new Node()), right(new Node()), keyValue(pair){};
@@ -28,13 +29,46 @@ namespace ft
     {
     public:
         // ft::Node<T> *head = new ft::Node<T>();
-		typedef T pair_type;
+		
         ft::Node<T> *head = NULL;
+		typedef typename ft::IteratorForMap<ft::Node<T>>::iterator_type						iterator;
         Tree(){};
+
         ~Tree(){};
         Allocator					_alloc;
         Comparator					_compare;
         size_t _size = 0;
+
+		// iterator begin() const {return min(*head);};
+		// iterator end() const {return max(*head);};
+
+		Tree &operator=(const Tree &other)
+		{
+			// std::cout << this << "    =    "  << *this <<  "    =    "  << other << std::endl;
+			// тут дерево чистится и вставляется другое дерево в него
+			if (this != &other)
+			{
+				std::cout << "puki puk" << std::endl;
+				// iterator - это ссылка на ноду
+				iterator first = (find_min(other.head));
+				std::cout << "puki puk1   :" << first->keyValue <<std::endl;
+				iterator last =  (find_max(other.head));
+				// std::cout << "puki puk12" << "   " <<last<< "   "  << first<< "   "<<  std::endl;
+
+				while (first != last)
+				{
+					std::cout << "puki puk12" << "   " << last->keyValue << "   "  << first->keyValue<< "   "<<  std::endl;
+					add(first);
+					first++;
+					std::cout << "puki puk12" << "   " << last->keyValue << "   "  << first->keyValue<< "   "<<  std::endl;
+				}
+				std::cout << "4" << std::endl;
+
+
+
+			}
+			return *this;
+		};
 
         void rightRotate(ft::Node<T>  *x)
 		{
@@ -112,12 +146,27 @@ namespace ft
             }
 
             ft::Node<T>* find_min(ft::Node<T>* x) const {
-			while (x->left->isNil != true)
-				x = x->left;
+			if (x == NULL)
+				return x;
+			// std::cout << "!!!!!!!!!!" << std::endl;
+			// std::cout << x->keyValue << std::endl;
+			while (x->left->isNil != true){
+				x = x->left; 
+				// std::cout << x->keyValue << x << " :key" <<std::endl;
+				}
+			return (x);
+		}
+
+            ft::Node<T>* find_max(ft::Node<T>* x) const {
+			if (x == NULL)
+				return x;
+			while (x->right->isNil != true)
+				x = x->right;
 			return (x);
 		}
         void add(ft::Node<T> *new_node)
         {
+
             if (head == NULL)
             {
                 head = new_node;
@@ -162,8 +211,8 @@ namespace ft
         void print_tree(ft::Node<T> *my_node)
         {
             // std::cout <<"PRINTTTTT" << my_node << "|"<< std::endl;
-            // if (my_node == NULL)
-            //     return;
+            if (my_node == NULL)
+                return;
             // std::cout <<    std::endl;
 			printBT("", my_node, false);
 		
