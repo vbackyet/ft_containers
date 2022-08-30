@@ -71,6 +71,9 @@ namespace ft
             return *this;
         };
         allocator_type get_allocator() const {return _alloc;}; 
+
+
+        
     };
     
 };

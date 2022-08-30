@@ -115,8 +115,8 @@ int main(void)
 
 
 
-    ft::Tree<int, std::allocator<int>, std::less<int>> my_tree ;
-    ft::Tree<int, std::allocator<int>, std::less<int>> my_tree2;
+    ft::Tree<int, std::allocator<int>, std::less<int> >my_tree ;
+    ft::Tree<int, std::allocator<int>, std::less<int> > my_tree2;
     // ft::Node<int> *node2 = new ft::Node<int>(23);
     my_tree.add(new ft::Node<int>(2));
     my_tree.add(new ft::Node<int>(3));

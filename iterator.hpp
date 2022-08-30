@@ -177,13 +177,13 @@ namespace ft
         // private:
             iterator_type _iter;
         public:
-            IteratorForMap(T val = nullptr) : _iter(val){};
+            IteratorForMap(T* val = nullptr) : _iter(val) {};
             IteratorForMap(const IteratorForMap& other) : _iter(other._iter) {};
             IteratorForMap &operator=(IteratorForMap const  &cp){
 				_iter = cp._iter;
 				return (*this);
 			};
-            ~IteratorForMap();
+            ~IteratorForMap(){};
 
             iterator_type min(iterator_type x)	{
 				while (x->left->isNil != true)
@@ -235,28 +235,34 @@ namespace ft
 			}
 
 			IteratorForMap& operator++() {
-                // std::cout << "here" << std::endl;
+      
 				_iter = next();
 				return (*this);
 			}
 
 			IteratorForMap operator++(int){ 
-                std::cout << "here" << std::endl;
+       
 				IteratorForMap tem(*this);
 				++(*this);
 				return tem;
 			}	
 			IteratorForMap& operator--() {
+  
 				_iter = prev();
 				return *this; 
 				
 			};
 
 			IteratorForMap operator--(int){
+    
 				IteratorForMap tem(*this);
 				--(*this);
 				return tem;
 			};
+            reference operator*() {return _iter->keyValue;}
+			const_reference operator*() const {return _iter->keyValue;}
+			pointer operator->() {return &(_iter->keyValue);}
+			const_pointer operator->() const {return &(_iter->keyValue);}
 			
             template <class Iter1>
             friend

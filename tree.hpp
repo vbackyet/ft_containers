@@ -1,5 +1,8 @@
 #pragma once
-
+#include "iterator.hpp"
+#include <iostream>
+#include <cstdlib>
+#include <unistd.h>
 
 #define BLACK 0
 #define RED 1
@@ -31,7 +34,7 @@ namespace ft
         // ft::Node<T> *head = new ft::Node<T>();
 		
         ft::Node<T> *head = NULL;
-		typedef typename ft::IteratorForMap<ft::Node<T>>::iterator_type						iterator;
+		typedef typename ft::IteratorForMap<ft::Node<T> >						iterator;
         Tree(){};
 
         ~Tree(){};
@@ -41,29 +44,34 @@ namespace ft
 
 		// iterator begin() const {return min(*head);};
 		// iterator end() const {return max(*head);};
-
+		void clearAll()
+		{
+			// for (; _size > 0; --_size)
+			// 	_alloc.destroy(_p +_size - 1); 
+		};	
 		Tree &operator=(const Tree &other)
 		{
-			// std::cout << this << "    =    "  << *this <<  "    =    "  << other << std::endl;
-			// тут дерево чистится и вставляется другое дерево в него
+			// // тут дерево чистится и вставляется другое дерево в него
 			if (this != &other)
 			{
-				std::cout << "puki puk" << std::endl;
-				// iterator - это ссылка на ноду
-				iterator first = (find_min(other.head));
-				std::cout << "puki puk1   :" << first->keyValue <<std::endl;
-				iterator last =  (find_max(other.head));
-				// std::cout << "puki puk12" << "   " <<last<< "   "  << first<< "   "<<  std::endl;
+				this.clearAll();
+			// 	std::cout << "puki puk" << std::endl;
+
+				iterator first(find_min(other.head));
+				iterator last(find_max(other.head));
+
 
 				while (first != last)
 				{
-					std::cout << "puki puk12" << "   " << last->keyValue << "   "  << first->keyValue<< "   "<<  std::endl;
-					add(first);
+					ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
+					add(_puk);
 					first++;
-					std::cout << "puki puk12" << "   " << last->keyValue << "   "  << first->keyValue<< "   "<<  std::endl;
+					_size++;
+					// std::cout << "puki puk: " << first._iter << "  "<<last._iter <<std::endl;
+					// usleep(3000000);
 				}
-				std::cout << "4" << std::endl;
-
+				ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
+				add(_puk);
 
 
 			}
@@ -166,7 +174,7 @@ namespace ft
 		}
         void add(ft::Node<T> *new_node)
         {
-
+			_size++;
             if (head == NULL)
             {
                 head = new_node;
@@ -221,7 +229,7 @@ namespace ft
         void DeleteFixup(ft::Node<T> *x)
         {
 			ft::Node<T> *w;
-
+			
 			while (x != head && x->color == BLACK){
 				if (x == x->parent->left){
 					w = x->parent->right;
@@ -287,6 +295,7 @@ namespace ft
             ft::Node<T> *x;
             ft::Node<T> *y;
             int deleteOrigCOlor = node_to_delete->color;
+			_size--;
             if (node_to_delete->left->isNil)// если есть только правый ребенок
             {
                 x = node_to_delete->right; 
