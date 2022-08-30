@@ -33,28 +33,23 @@ namespace ft
     public:
         // ft::Node<T> *head = new ft::Node<T>();
 		
-        ft::Node<T> *head = NULL;
+        ft::Node<T> *head;
 		typedef typename ft::IteratorForMap<ft::Node<T> >						iterator;
-        Tree(){};
+        Tree():head(NULL),_size(0) {};
 
         ~Tree(){};
         Allocator					_alloc;
         Comparator					_compare;
-        size_t _size = 0;
+        size_t _size;
 
 		// iterator begin() const {return min(*head);};
 		// iterator end() const {return max(*head);};
-		void clearAll()
-		{
-			// for (; _size > 0; --_size)
-			// 	_alloc.destroy(_p +_size - 1); 
-		};	
 		Tree &operator=(const Tree &other)
 		{
 			// // тут дерево чистится и вставляется другое дерево в него
 			if (this != &other)
 			{
-				this.clearAll();
+				// this.clearAll();
 			// 	std::cout << "puki puk" << std::endl;
 
 				iterator first(find_min(other.head));

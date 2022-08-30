@@ -7,7 +7,7 @@
 namespace ft
 {
     // ключ / значение / как сравнивать / аллокатор
-    template< class Key,  class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T>>>
+    template< class Key,  class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> > >
     class Map
     {
     public:
@@ -25,8 +25,8 @@ namespace ft
 
 
                 //iterators
-        typedef ft::IteratorForMap<ft::Node<value_type>>      iterator;
-        typedef ft::IteratorForMap<ft::Node<const value_type>>      const_iterator;
+        typedef ft::IteratorForMap<ft::Node<value_type> >      iterator;
+        typedef ft::IteratorForMap<ft::Node<const value_type> >      const_iterator;
 
         typedef ft::ReverseIteratorForVector<iterator>														reverse_iterator;
 		typedef ft::ReverseIteratorForVector<const_iterator>												const_reverse_iterator;

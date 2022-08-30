@@ -36,7 +36,7 @@ namespace ft
     public:
         explicit Vector(const allocator_type& _allocator  = allocator_type()):  _alloc(_allocator)
         {
-            std::cout << "Создано нормально vector без аргументов" << std::endl;
+            // std::cout << "Создано нормально vector без аргументов" << std::endl;
             // _alloc = 0 ;
             _size_of_vector = 0;
             // _alloc = allocator_type();
@@ -45,18 +45,43 @@ namespace ft
 
         } 
         // конструктор нормальный с размером вектора vector <int> vector_first(5);
-        explicit Vector(size_type Vector_size, const allocator_type& _allocator  = allocator_type()) :  _alloc(_allocator)
+        explicit Vector(size_type Vector_size, const value_type& val = value_type(), const allocator_type& _allocator  = allocator_type()) :  _alloc(_allocator)
         {
             // _alloc =_allocator; // почему так constructor for 'ft::Vector<int>' must explicitly initialize the reference member '_alloc'
-            std::cout << "Создано нормально vector  с размером " <<  Vector_size <<std::endl;
+            // std::cout << "Создано нормально vector  с размером " <<  Vector_size <<std::endl;
             _size_of_vector = 0;
             _start= _alloc.allocate(Vector_size);
             _capacity = Vector_size;
+            this->assign(Vector_size , val);
 
-        }      
+        }     
+			
+        template <class InIter> 
+        Vector (InIter first, InIter last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InIter>::value, InIter>::type* =0) : _size_of_vector(0),_alloc(alloc), _capacity(0), _start(0)
+        {
+            this->assign(first, last);
+        };   
+
+        Vector &operator=(const Vector& x)
+        {
+
+            if (this != &x)
+            {
+                // clear();
+                // _alloc.deallocate(_start, _capacity); // вызывается ошибка
+                _size_of_vector = x._size_of_vector;
+                _capacity = x._capacity;
+                _start = _alloc.allocate(_capacity);
+
+                for (size_type i = 0; i < _size_of_vector; ++i)
+                    _alloc.construct(_start + i, *(x._start + i));
+            }
+            return (*this);
+        };     
+        size_type max_size() const { return (allocator_type().max_size()); }    
         size_type capacity() const { return _capacity; }
 		size_type size() const {return _size_of_vector;}
-			
+			bool empty() const { return (_size_of_vector > 0 ? false : true); }
         void reserve( size_type new_cap )
         {
             if (new_cap <= _capacity)
@@ -115,12 +140,19 @@ namespace ft
             return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
         }
         // консруктор копирования 
-        explicit Vector(const Vector& prev_vector)
-            { 
-                std::cout << "Создано при помощи копирования" << std::endl;
-                prev_vector = *this;
+        Vector(const Vector& prev_vector)
+        { 
+            *this = prev_vector;
 
-            }
+        }
+
+
+        	// 		Vector (const Vector& prev_vector): _size_of_vector(x._size_of_vector), _capacity(x._capacity){
+			// 	_alloc = allocator_type();
+			// 	_p = _alloc.allocate(_capacity);
+			// 	for (size_type i = 0; i < _size; ++i)
+			// 			_alloc.construct(_p + i, *(x._p + i));
+			// };
         allocator_type get_allocator()
         {
             return (_alloc);
@@ -135,21 +167,32 @@ namespace ft
 
         void assign(size_type count, const T& value )
         {
-            this->clear();
+            // this->clear();
             _size_of_vector = count;
             reserve(_size_of_vector);
             for(int i = 0; i <  (int) _size_of_vector; i++)
                 _start[i] = value;            
         }
         template< class InputIt >
-        void assign( InputIt first, InputIt last,  typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type = 0 )
+        void assign( InputIt first, InputIt last,  typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type* = 0 )
         {
-            this->clear();
-            _size_of_vector = last - first;
-            reserve(_size_of_vector);
-            // for(int i = 0; i < _size_of_vector; i++)
-            //     _start[i] = value;       
-            _start = first;  
+            // this->clear();
+
+				_size_of_vector = last - first;
+			
+            if (_capacity < _size_of_vector)
+            {
+                // if (_capacity > 0)
+                    _alloc.deallocate(_start, _capacity);
+                _capacity = _size_of_vector;
+                _start = _alloc.allocate(_capacity);
+            }
+            
+            for (int i = 0;	first != last; ++first){
+                _alloc.construct(_start + i, *first);
+                i++;
+            }
+            
         }
 
 
@@ -243,7 +286,7 @@ namespace ft
     }
 
     template< class InputIt >    
-    void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type = 0 )
+    void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type* = 0 )
     {
 
 
@@ -362,7 +405,8 @@ namespace ft
             // rend
     /////////////////////////// DESTRUCTOR ///////////////////////////////
         ~Vector()
-        { std::cout << "Деструктор вызван" << std::endl;
+        { 
+            // std::cout << "Деструктор вызван" << std::endl;
         _alloc.deallocate( _start, _size_of_vector );}
 // size_type 	Unsigned integer type (usually std::size_t)
 // difference_type 	Signed integer type (usually std::ptrdiff_t)

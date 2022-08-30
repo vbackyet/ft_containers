@@ -112,7 +112,7 @@ namespace ft
     {
 
         public:
-            typedef T iterator_type;
+            typedef T* iterator_type;
             // typedef    pointer;
         	ReverseIteratorForVector():_elem(0){};
             
