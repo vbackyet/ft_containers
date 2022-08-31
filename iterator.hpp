@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ITERATOR_HPP
+#define ITERATOR_HPP
 #include <iostream>
 #include <ostream>
 #include <iterator>
@@ -265,15 +267,15 @@ namespace ft
 			const_pointer operator->() const {return &(_iter->keyValue);}
 			
             template <class Iter1>
-            friend
-            bool operator==(const IteratorForMap<Iter1 >& x, const IteratorForMap<Iter1>& y) {
-                return (x._iter == y._iter);
+            
+            bool operator==(const IteratorForMap<Iter1>& y) {
+                return (_iter == y._iter);
             };
 
             template <class Iter1 >
-            friend
-            bool operator!=(const IteratorForMap<Iter1>& x, const IteratorForMap<Iter1>& y) {
-                return !(x == y);
+            
+            bool operator!=( const IteratorForMap<Iter1>& y) {
+                return !(*this == y);
             };
             
         
@@ -281,4 +283,6 @@ namespace ft
 
 
 }
+
+#endif
 

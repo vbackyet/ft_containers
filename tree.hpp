@@ -19,6 +19,8 @@ namespace ft
         struct Node* right;
 		typedef T pair_type;
 		T keyValue; // allocates with notes
+		// typedef T.first f_value;
+		// typedef T.second s_value;
 		Node():color(BLACK), isNil(1),parent(0), left(0), right(0){}; //for nil
 		Node(T pair):color(RED), isNil(0), parent(0), left(new Node()), right(new Node()), keyValue(pair){};
 		Node(const Node &other): 
@@ -26,6 +28,9 @@ namespace ft
 
 		~Node(){};
     };
+
+
+	
 
     template<class T, class Allocator, class Comparator>
     class Tree
@@ -35,6 +40,8 @@ namespace ft
 		
         ft::Node<T> *head;
 		typedef typename ft::IteratorForMap<ft::Node<T> >						iterator;
+		typedef typename T::first_type												key_type;
+		typedef typename T::second_type											mapped_type;
 
         Allocator					_alloc;
         Comparator					_compare;
@@ -278,6 +285,20 @@ namespace ft
 			x->color = BLACK;
 		
         }
+
+		ft::Node<T>* treeSearch(const key_type& k) const
+		{
+			ft::Node<T>* x = head;
+			ft::pair<key_type, mapped_type> kPair = ft::make_pair(k, 0);
+
+			while (x->isNil != true && k != x->keyValue.first) {	
+				if (_compare(kPair, x->keyValue) == true )
+					x = x->left;			
+				else 
+					x = x->right; }
+			return (x);
+
+		}
         void transplant_node(ft::Node<T> *node_to_delete, ft::Node<T> *node_to_transplant)
         {
 			if (node_to_delete->parent == 0){

@@ -77,6 +77,14 @@ namespace ft
             _tree.add(the_new);
             return (ft::make_pair(iterator(the_new), true));
         };
+        		iterator find (const key_type& k) {	return (iterator(_tree.treeSearch(k)));	}
+
+		const_iterator find (const key_type& k) const {	return const_iterator(iterator(_tree.treeSearch(k)));	}
+        
+		size_type count (const key_type& k) const {
+			if (find(k) == end())
+				return 0;
+			return 1; };
         iterator insert( iterator hint, const value_type& value )
         {
             (void)hint;	
@@ -95,8 +103,9 @@ namespace ft
         };
         iterator begin(){return iterator(_tree.find_min(_tree.head));};
         const_iterator begin() const{return iterator(_tree.find_min(_tree.head));};
-          iterator end(){return iterator(_tree.find_max(_tree.head));};
+        iterator end(){return iterator(_tree.find_max(_tree.head));};
         const_iterator end() const{return iterator(_tree.find_max(_tree.head));};
+        size_type size() const{return _tree._size;};
     };
     
 };

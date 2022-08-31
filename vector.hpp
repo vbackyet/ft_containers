@@ -120,33 +120,27 @@ namespace ft
             _size_of_vector++; 
         }
 
-        template <class TF, class AllocF>
-        friend bool operator==(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
-        {
-            if(lhs._size_of_vector != rhs._size_of_vector)
-                return false;
-            for( size_type i = 0; i < lhs._size_of_vector; i++)
-            {
-                if (lhs[i] != rhs[i])
-                    return false;
-            }
-            return true;
-        }
-        template <class TF, class AllocF>
-        friend bool operator!=(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
-        {
-            return (!(lhs == rhs));
-        }
-        template< class TF, class AllocF >
-        friend bool operator>(const ft::Vector<TF,AllocF>& lhs, const ft::Vector<TF,AllocF>& rhs)
-        {
-            return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-        }
-        template< class TF, class AllocF >
-        friend bool operator<(const ft::Vector<TF,AllocF>& rhs, const ft::Vector<TF,AllocF>& lhs)
-        {
-            return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-        }
+			template <class TF, class AllocF>
+			friend bool operator== (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs);
+			
+			template <class TF, class AllocF>
+			friend bool operator!= (const Vector<TF, AllocF>& lhs, const Vector<TF, AllocF>& rhs);
+				
+			template <class TF, class AllocF>
+			friend bool operator<  (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs);
+				
+			template <class TF, class AllocF>
+			friend bool operator<= (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs);
+				
+			template <class TF, class AllocF>
+			friend bool operator>  (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs);
+				
+			template <class TF, class AllocF>
+			friend bool operator>= (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs);
+
+			// template <class TF, class AllocF>
+			// friend void swap (vector<TF, AllocF>& x, vector<TF, AllocF>& y);
+
         // консруктор копирования 
         Vector(const Vector& prev_vector)
         { 
@@ -437,4 +431,47 @@ namespace ft
 // reverse_iterator 	std::reverse_iterator<iterator>
 // const_reverse_iterator 	std::reverse_iterator<const_iterator>
     };
+
+	template <class TF, class AllocF>
+	bool operator== (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+
+		int size = lhs.size();
+		for (int i = 0; i < size; ++i)
+		{
+			if (lhs[i] != rhs[i])
+				return false;
+		}
+		return true;
+	}
+	
+	template <class TF, class AllocF>
+	bool operator != (const Vector<TF, AllocF>& lhs, const Vector<TF, AllocF>& rhs){ return !(lhs == rhs); }
+		
+	template <class TF, class AllocF>
+	bool operator < (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs){ 
+		size_t size = lhs.size();
+		if (size > rhs.size())
+			size = rhs.size();
+		for (size_t i = 0; i < size; ++i){
+			if (lhs[i] != rhs[i])
+				return lhs[i] < rhs[i];
+		}
+		if (lhs.size() < rhs.size())
+			return true;
+		return (false); 
+		
+	}
+		
+	template <class TF, class AllocF>
+	bool operator <= (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs){ return !(rhs < lhs); }
+		
+	template <class TF, class AllocF>
+	bool operator > (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs){ return (rhs < lhs); }
+		
+	template <class TF, class AllocF>
+	bool operator >= (const Vector<TF,AllocF>& lhs, const Vector<TF,AllocF>& rhs){ return !(lhs < rhs); }
+
 }
