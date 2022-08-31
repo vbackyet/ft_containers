@@ -35,12 +35,15 @@ namespace ft
 		
         ft::Node<T> *head;
 		typedef typename ft::IteratorForMap<ft::Node<T> >						iterator;
-        Tree():head(NULL),_size(0) {};
 
-        ~Tree(){};
         Allocator					_alloc;
         Comparator					_compare;
         size_t _size;
+
+        Tree(const Comparator &comp):head(NULL), _compare(comp),_size(0) {};
+	
+        ~Tree(){};
+
 
 		// iterator begin() const {return min(*head);};
 		// iterator end() const {return max(*head);};
@@ -58,14 +61,14 @@ namespace ft
 
 				while (first != last)
 				{
-					ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
+					ft::Node<T> *_puk = new ft::Node<T>(first._iter);
 					add(_puk);
 					first++;
 					_size++;
 					// std::cout << "puki puk: " << first._iter << "  "<<last._iter <<std::endl;
 					// usleep(3000000);
 				}
-				ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
+				ft::Node<T> *_puk = new ft::Node<T>(first._iter);
 				add(_puk);
 
 

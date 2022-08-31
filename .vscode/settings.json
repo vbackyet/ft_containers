@@ -81,6 +81,12 @@
         "semaphore": "cpp",
         "thread": "cpp",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "codecvt": "cpp",
+        "set": "cpp",
+        "*.ipp": "cpp",
+        "filesystem": "cpp",
+        "version": "cpp",
+        "__memory": "cpp"
     }
 }

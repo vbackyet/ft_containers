@@ -84,20 +84,28 @@ namespace ft
 			bool empty() const { return (_size_of_vector > 0 ? false : true); }
         void reserve( size_type new_cap )
         {
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new_res! \n";
             if (new_cap <= _capacity)
                 return ;
-
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new_res! \n";
             pointer _new_start = _alloc.allocate(new_cap);
             _capacity = new_cap;
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new_res! \n";
+            if (_size_of_vector > 0)
+            {
             for(size_type i = 0; i <= _size_of_vector - 1;i++)
             {
+    
                 _alloc.construct(_new_start + i, *(_start + i) );
             }
             for (size_type i = 0; i < _size_of_vector; i++)
                 _alloc.destroy(_start + i);
+            }
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new_res2! \n";
             _alloc.deallocate(_start, _capacity);
             _start = _new_start;
             _capacity = new_cap;
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new_res! \n";
         }
         void push_back(const value_type &element_to_insert)
         {
@@ -168,10 +176,14 @@ namespace ft
         void assign(size_type count, const T& value )
         {
             // this->clear();
-            _size_of_vector = count;
-            reserve(_size_of_vector);
-            for(int i = 0; i <  (int) _size_of_vector; i++)
-                _start[i] = value;            
+            // std::cout << count <<"cap_new! \n";
+            // _size_of_vector = count;
+ 
+            reserve(count);
+            // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new! \n";
+            for(int i = 0; i <  (int) count; i++)
+                _start[i] = value; 
+            _size_of_vector = count;           
         }
         template< class InputIt >
         void assign( InputIt first, InputIt last,  typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type* = 0 )

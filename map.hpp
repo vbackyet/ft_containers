@@ -1,19 +1,20 @@
 #pragma once
 #include <functional>
 #include "tree.hpp"
+#include "utils.hpp"
 #include <iostream>
 #include <ostream>
 #include <iterator>
 namespace ft
 {
     // ключ / значение / как сравнивать / аллокатор
-    template< class Key,  class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> > >
+    template< class Key,  class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
     class Map
     {
     public:
         typedef Key key_type;
         typedef T mapped_type;
-        typedef std::pair<const Key, T>    value_type;
+        typedef ft::pair<const Key, T>    value_type;
         typedef Compare																				key_compare;
 		typedef Allocator																			allocator_type;
         typedef typename Allocator::reference														reference;
@@ -47,10 +48,9 @@ namespace ft
         typedef typename Allocator::template rebind< ft::Node<value_type> >::other		allocatorNode;
         key_compare _comp; 
         allocator_type _alloc;
-        ft::Tree<key_type, allocatorNode, value_compare>  _tree;
+        ft::Tree<value_type, allocatorNode, value_compare>  _tree;
 
     public:
-        Map(/* args */);
         explicit Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp)){};
         template< class InputIt >
         Map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp))
@@ -71,9 +71,32 @@ namespace ft
             return *this;
         };
         allocator_type get_allocator() const {return _alloc;}; 
-
-
-        
+        ft::pair<iterator, bool> insert( const value_type& value )
+        {
+            ft::Node<value_type>    *the_new = new ft::Node<value_type>(value);
+            _tree.add(the_new);
+            return (ft::make_pair(iterator(the_new), true));
+        };
+        iterator insert( iterator hint, const value_type& value )
+        {
+            (void)hint;	
+            ft::Node<value_type>    *the_new = new ft::Node<value_type>(value);
+            _tree.add(the_new);
+            return (iterator(the_new));
+        };
+        template< class InputIt >
+        void insert( InputIt first, InputIt last )
+        {
+          
+            while (first != last){
+                 ft::Node<value_type>    *the_new = new ft::Node<value_type>(ft::make_pair(first->first, first->second));
+				_tree.add(the_new);
+				++first;}
+        };
+        iterator begin(){return iterator(_tree.find_min(_tree.head));};
+        const_iterator begin() const{return iterator(_tree.find_min(_tree.head));};
+          iterator end(){return iterator(_tree.find_max(_tree.head));};
+        const_iterator end() const{return iterator(_tree.find_max(_tree.head));};
     };
     
 };
