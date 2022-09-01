@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
-
+#include "utils.hpp"
 #define BLACK 0
 #define RED 1
 
@@ -23,6 +23,7 @@ namespace ft
 		// typedef T.second s_value;
 		Node():color(BLACK), isNil(1),parent(0), left(0), right(0){}; //for nil
 		Node(T pair):color(RED), isNil(0), parent(0), left(new Node()), right(new Node()), keyValue(pair){};
+		// Node(const T pair):color(RED), isNil(0), parent(0), left(new Node()), right(new Node()), keyValue(pair){};
 		Node(const Node &other): 
 		color(other.color), isNil(other.isNil), parent(other.parent), left(other.left), right(other.right), keyValue(other.keyValue) {};
 
@@ -68,14 +69,14 @@ namespace ft
 
 				while (first != last)
 				{
-					ft::Node<T> *_puk = new ft::Node<T>(first._iter);
+					ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
 					add(_puk);
 					first++;
 					_size++;
 					// std::cout << "puki puk: " << first._iter << "  "<<last._iter <<std::endl;
 					// usleep(3000000);
 				}
-				ft::Node<T> *_puk = new ft::Node<T>(first._iter);
+				ft::Node<T> *_puk = new ft::Node<T>(first._iter->keyValue);
 				add(_puk);
 
 
@@ -290,7 +291,8 @@ namespace ft
 		{
 			ft::Node<T>* x = head;
 			ft::pair<key_type, mapped_type> kPair = ft::make_pair(k, 0);
-
+			if (head == NULL)
+				return head;
 			while (x->isNil != true && k != x->keyValue.first) {	
 				if (_compare(kPair, x->keyValue) == true )
 					x = x->left;			
@@ -309,11 +311,12 @@ namespace ft
 				node_to_delete->parent->right = node_to_transplant;
 			node_to_transplant->parent = node_to_delete->parent;
         }
-        void deleteNode(ft::Node<T> *node_to_delete)
+        void deleteNode(iterator node_to_delete)
         {
+			ft::Node<T> *node_to_del = node_to_delete;
             ft::Node<T> *x;
             ft::Node<T> *y;
-            int deleteOrigCOlor = node_to_delete->color;
+            int deleteOrigCOlor = node_to_del->color;
 			_size--;
             if (node_to_delete->left->isNil)// если есть только правый ребенок
             {
@@ -347,6 +350,11 @@ namespace ft
 			// _alloc.deallocate(node_to_delete, sizeof(ft::Node<T>));
             
         }
+		bool	operator==(const ft::Tree<T, Allocator, Comparator> y){
+			if (_size != y._size)
+				return false;
+			return (ft::equal(iterator(find_min(head)), iterator(find_max(head)), iterator(y.find_min(y.head))));
+		};
         void printBT(const std::string& prefix, const ft::Node<T>* nodeV, bool isLeft) const
 		{
             std::cout << prefix;

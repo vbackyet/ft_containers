@@ -27,7 +27,7 @@ namespace ft
 
                 //iterators
         typedef ft::IteratorForMap<ft::Node<value_type> >      iterator;
-        typedef ft::IteratorForMap<ft::Node<const value_type> >      const_iterator;
+        typedef ft::IteratorForMap<const ft::Node<value_type> >      const_iterator;
 
         typedef ft::ReverseIteratorForVector<iterator>														reverse_iterator;
 		typedef ft::ReverseIteratorForVector<const_iterator>												const_reverse_iterator;
@@ -44,14 +44,14 @@ namespace ft
                 bool operator()(const value_type& __x, const value_type& __y) const { return comp(__x.first, __y.first); }
         };
     
-    protected:
+    private:
         typedef typename Allocator::template rebind< ft::Node<value_type> >::other		allocatorNode;
         key_compare _comp; 
         allocator_type _alloc;
         ft::Tree<value_type, allocatorNode, value_compare>  _tree;
 
     public:
-        explicit Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp)){};
+        Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp)){};
         template< class InputIt >
         Map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp))
         {
@@ -60,15 +60,25 @@ namespace ft
         Map( const Map& x):_comp(x._comp), _tree(value_compare(x._comp)){ _tree = x._tree; };
         ~Map(){};
 
-        Map& operator=( const Map& other )
+        Map& operator=(const Map& other )
         {
             if (*this != other)
             {
-            _comp = other.comp;
-            _alloc = other.alloc;
-            _tree = other.tree;
+            _comp = other._comp;
+            _alloc = other._alloc;
+            _tree = other._tree;
             }
             return *this;
+        };
+
+
+
+        bool operator==(const Map& other )
+{	        return (_tree == other._tree); };
+
+        bool operator!=(const Map& other )
+        {
+                return!(*this == other);
         };
         allocator_type get_allocator() const {return _alloc;}; 
         ft::pair<iterator, bool> insert( const value_type& value )
@@ -77,11 +87,14 @@ namespace ft
             _tree.add(the_new);
             return (ft::make_pair(iterator(the_new), true));
         };
-        		iterator find (const key_type& k) {	return (iterator(_tree.treeSearch(k)));	}
+        iterator find (const key_type& k) {	return (iterator(_tree.treeSearch(k)));	}
 
-		const_iterator find (const key_type& k) const {	return const_iterator(iterator(_tree.treeSearch(k)));	}
+		const_iterator find (const key_type& k) const {	return const_iterator(_tree.treeSearch(k));	}
         
 		size_type count (const key_type& k) const {
+            // std::cout<<  " puk\n";
+            // find(k);
+            // std::cout<<  " puk2\n";
 			if (find(k) == end())
 				return 0;
 			return 1; };
@@ -102,10 +115,27 @@ namespace ft
 				++first;}
         };
         iterator begin(){return iterator(_tree.find_min(_tree.head));};
-        const_iterator begin() const{return iterator(_tree.find_min(_tree.head));};
+        const_iterator begin() const{return const_iterator(_tree.find_min(_tree.head));};
         iterator end(){return iterator(_tree.find_max(_tree.head));};
-        const_iterator end() const{return iterator(_tree.find_max(_tree.head));};
+        const_iterator end() const{return const_iterator(_tree.find_max(_tree.head));};
         size_type size() const{return _tree._size;};
+
+
+
+        reverse_iterator rbegin(){return reverse_iterator(iterator(_tree.find_min(_tree.head)));};
+        const_reverse_iterator rbegin() const{return const_reverse_iterator(const_iterator(_tree.find_min(_tree.head)));};
+        reverse_iterator rend(){return reverse_iterator(iterator(_tree.find_max(_tree.head)));};
+        const_reverse_iterator rend() const{return const_reverse_iterator(const_iterator(_tree.find_max(_tree.head)));};
+
+
+        // erase
+        void erase( iterator pos )
+        {
+            _tree.deleteNode(pos);
+        };
+// void erase( iterator first, iterator last );
+
+// size_type erase( const Key& key );
+        // rend
     };
-    
 };

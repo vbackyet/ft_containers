@@ -180,6 +180,7 @@ namespace ft
             iterator_type _iter;
         public:
             IteratorForMap(T* val = nullptr) : _iter(val) {};
+            // IteratorForMap(const T* val = nullptr) : _iter(val) {};
             IteratorForMap(const IteratorForMap& other) : _iter(other._iter) {};
             IteratorForMap &operator=(IteratorForMap const  &cp){
 				_iter = cp._iter;
