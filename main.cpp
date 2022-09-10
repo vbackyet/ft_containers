@@ -14,7 +14,7 @@
 #include <map>
 #include "map.hpp"
 #include <string>
-#include <string_view>
+// #include <string_view>
 
 
 #define	_vector 			ft::Vector
@@ -40,10 +40,14 @@ int main() {
     v.push_back(mp.size());
     it = mp.begin();
     v.push_back(it->first);
-     _map<T, V>::iterator it4 = mp.begin();
+    std::cout << "here " << mp.size() << std::endl;
+    _map<T, V>::iterator it4 = mp.begin();
     for (; it4 != mp.end(); it4 = mp.begin())
+    {
+        std::cout << it4._iter << std::endl;
         mp.erase(it4);
-
+    }
+    std::cout << "here 2" << std::endl;
     v.push_back(mp.size());
     _map<int, int> mp2;
     for (int i = 0, j = 0; i < 10 ; ++i, ++j)

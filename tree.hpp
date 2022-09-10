@@ -26,7 +26,8 @@ namespace ft
 		// Node(const T pair):color(RED), isNil(0), parent(0), left(new Node()), right(new Node()), keyValue(pair){};
 		Node(const Node &other): 
 		color(other.color), isNil(other.isNil), parent(other.parent), left(other.left), right(other.right), keyValue(other.keyValue) {};
-
+            friend std::ostream &operator<<(std::ostream &os, const Node &_my_node) {
+                return os  << _my_node.keyValue;}
 		~Node(){};
     };
 
@@ -232,6 +233,8 @@ namespace ft
 		
             // std::cout <<    std::endl;
         };
+
+
         void DeleteFixup(ft::Node<T> *x)
         {
 			ft::Node<T> *w;
@@ -311,12 +314,15 @@ namespace ft
 				node_to_delete->parent->right = node_to_transplant;
 			node_to_transplant->parent = node_to_delete->parent;
         }
-        void deleteNode(iterator node_to_delete)
+        void deleteNode(iterator node_to_del)
         {
-			ft::Node<T> *node_to_del = node_to_delete;
+			ft::Node<T> *node_to_delete = node_to_del._iter;
             ft::Node<T> *x;
             ft::Node<T> *y;
-            int deleteOrigCOlor = node_to_del->color;
+			// iterator x;
+            // iterator y;
+            int deleteOrigCOlor = node_to_delete->color;
+			std::cout << "color: " << deleteOrigCOlor << std::endl;
 			_size--;
             if (node_to_delete->left->isNil)// если есть только правый ребенок
             {
@@ -344,8 +350,10 @@ namespace ft
 				y->left = node_to_delete->left;
 				y->left->parent = y;
 				y->color = node_to_delete->color; }
+			print_tree(head);
 			if (deleteOrigCOlor == BLACK)
 				DeleteFixup(x);
+			std::cout << "Fixed" << std::endl;
             // _alloc.destroy(node_to_delete);
 			// _alloc.deallocate(node_to_delete, sizeof(ft::Node<T>));
             

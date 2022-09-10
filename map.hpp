@@ -131,6 +131,7 @@ namespace ft
         // erase
         void erase( iterator pos )
         {
+            // std::cout << "here 3" << std::endl;
             _tree.deleteNode(pos);
         };
 // void erase( iterator first, iterator last );
