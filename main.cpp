@@ -29,7 +29,7 @@ int main() {
     std::vector<int> v;
     // _map<int> mp;
     _map<int, int> mp;
-    for (int i = 0, j = 0; i < 30 * _ratio; ++i, ++j)
+    for (int i = 0, j = 0; i < 1 * _ratio; ++i, ++j)
         mp.insert(_make_pair(i, j));
      _map<T, V>::iterator it = mp.begin();
     v.push_back(it->first);

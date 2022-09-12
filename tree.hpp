@@ -27,7 +27,7 @@ namespace ft
 		Node(const Node &other): 
 		color(other.color), isNil(other.isNil), parent(other.parent), left(other.left), right(other.right), keyValue(other.keyValue) {};
             friend std::ostream &operator<<(std::ostream &os, const Node &_my_node) {
-                return os  << _my_node.keyValue;}
+                return os  << _my_node.keyValue << " _____";}
 		~Node(){};
     };
 
@@ -121,31 +121,31 @@ namespace ft
         {
             // (void)pasted_node;
             ft::Node<T> *y;
-            while ( z->parent->color == RED) // пока не дойдем до корня
-            {
-                
-				if (z->parent == z->parent->parent->left){ // parent is left child
+
+			while (z->parent->color == RED){ // parent is red 
+
+				if (z->parent == z->parent->parent->left){ // z parent is left child
 					y = z->parent->parent->right;
 					if (y->color == RED){ // y is red case
 						z->parent->color = BLACK;
 						y->color = BLACK;
 						z->parent->parent->color = RED;
 						z = z->parent->parent;}
-					else { //y is black case
+					else {
 						if (z == z->parent->right){ //y is black case, triangle relationship
 							z = z->parent;
 							leftRotate(z);}
-						z->parent->color = BLACK; // case 3
+						z->parent->color = BLACK;
 						z->parent->parent->color = RED;
 						rightRotate(z->parent->parent);}
 				}
-				else {//parent is right child 
-					y = z->parent->parent->left; // то же самое только зеркально
+				else {
+					y = z->parent->parent->left;
 					if (y->color == RED){ // y (uncle) is red case
 						z->parent->color = BLACK;
 						y->color = BLACK;
 						z->parent->parent->color = RED;
-                        }
+						z = z->parent->parent;}
 					else {
 						if (z == z->parent->left){ //y is black case, triangle relationship
 							z = z->parent;
@@ -154,8 +154,9 @@ namespace ft
 						z->parent->parent->color = RED;
 						leftRotate(z->parent->parent);}
 				}
-                if (z == head)
+				                if (z == head)
                     break;
+
 			}
             head->color = BLACK; // case 0
             }
@@ -179,14 +180,18 @@ namespace ft
 				x = x->right;
 			return (x);
 		}
+
         void add(ft::Node<T> *new_node)
         {
 			_size++;
+
             if (head == NULL)
             {
+				std::cout << "puk " << std::endl;
                 head = new_node;
+				// ft::Node<T> *mill_head = new ft::Node<T> ();
                 head->color = BLACK;
-                // head->parent = new ft::Node<T> ();
+				// mill_head->right = head;
                 }
             else
             {
@@ -204,7 +209,9 @@ namespace ft
                             else
                                 {curr_node->right = new_node;
                                 new_node->parent = curr_node;
+								new_node->color = RED;
                                 balance(curr_node->right);
+								
                                 break;}
                         }
                     else 
@@ -214,6 +221,7 @@ namespace ft
                             {
                                 curr_node->left = new_node;
                                 new_node->parent = curr_node;
+								new_node->color = RED;
                                 balance(curr_node->left);
                                 break;
                             }
@@ -222,6 +230,8 @@ namespace ft
                     //     { paste_node(curr_node, new_node);break;}
                 }
             }
+			std::cout << "after_balance add: " << std::endl;
+			print_tree(head);
         };
         void print_tree(ft::Node<T> *my_node)
         {
@@ -321,8 +331,10 @@ namespace ft
             ft::Node<T> *y;
 			// iterator x;
             // iterator y;
+			std::cout << "before: " << std::endl;
+			print_tree(head);
             int deleteOrigCOlor = node_to_delete->color;
-			std::cout << "color: " << deleteOrigCOlor << std::endl;
+			
 			_size--;
             if (node_to_delete->left->isNil)// если есть только правый ребенок
             {
@@ -350,9 +362,10 @@ namespace ft
 				y->left = node_to_delete->left;
 				y->left->parent = y;
 				y->color = node_to_delete->color; }
-			print_tree(head);
+			
 			if (deleteOrigCOlor == BLACK)
 				DeleteFixup(x);
+			print_tree(head);
 			std::cout << "Fixed" << std::endl;
             // _alloc.destroy(node_to_delete);
 			// _alloc.deallocate(node_to_delete, sizeof(ft::Node<T>));
@@ -374,10 +387,11 @@ namespace ft
                 return ;
             }
             // print the value of the node
+			ft::pair<int,int> my_pair = nodeV->keyValue;
             if (nodeV->color == 0)
-                std::cout <<"\033[0;36m"<< nodeV->keyValue<<"\033[0m"<<std::endl;
+                std::cout <<"\033[0;36m"<< my_pair.first<<"\033[0m"<<std::endl;
             else
-                std::cout <<"\033[0;31m"<< nodeV->keyValue << "\033[0m"<<std::endl;
+                std::cout <<"\033[0;31m"<< my_pair.first << "\033[0m"<<std::endl;
             printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, true);
             printBT( prefix + (isLeft ? "│   " : "    "), nodeV->left, false);		
 		}
