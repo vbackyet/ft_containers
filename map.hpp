@@ -149,9 +149,37 @@ namespace ft
             // std::cout << "here 3" << std::endl;
             _Tree.rbTreeDelete(pos._iter);
         };
-// void erase( iterator first, iterator last );
+        void erase( iterator first, iterator last )
+        {
+            iterator it = first;
 
-// size_type erase( const Key& key );
+			while (first != last){
+				it = first.next();
+				_Tree.rbTreeDelete(first.base());
+				first = it;}
+        }
+
+        size_type erase( const Key& key )
+        {
+			Node<value_type>* rmNode = _Tree.treeSearch(key);
+			if (rmNode != end()){
+				_Tree.rbTreeDelete(rmNode);
+				return 1;}
+			else
+				return 0;
+        }
+
+        void swap (Map& x){	std::swap(x, *this); }
+
+		void clear(){ _Tree.clear();}
+
+		iterator lower_bound (const key_type& key) { return (_Tree.lower_bound(key)); };
+
+		const_iterator lower_bound (const key_type& key) const { return (_Tree.lower_bound(key));};
+
+		iterator upper_bound (const key_type& key) { return (_Tree.upper_bound(key)); };
+
+		const_iterator upper_bound (const key_type& key) const  { return (_Tree.upper_bound(key)); };
         // rend
     };
 };
