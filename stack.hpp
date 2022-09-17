@@ -90,49 +90,55 @@ namespace ft
 // Non-member functions
 // operator==operator!=operator<operator<=operator>operator>=operator<=>
 // (C++20)
-    template <class V, class COnt>
-    friend
-    bool
-     operator==(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype == rhs._stack_prototype);
-    }
-        template <class V, class COnt>
-    friend
-    bool
-     operator<=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype <= rhs._stack_prototype);
-    }
-        template <class V, class COnt>
-    friend
-    bool
-     operator>=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype >= rhs._stack_prototype);
-    }
-        template <class V, class COnt>
-    friend
-    bool
-     operator!=(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype != rhs._stack_prototype);
-    }
 
-    template <class V, class COnt>
-    friend
-    bool
-     operator<(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype < rhs._stack_prototype);
-    }
-    template <class V, class COnt>
-    friend
-    bool
-     operator>(const ft::Stack<V, COnt>& lhs, const ft::Stack<V, COnt>& rhs)
-    {
-        return(lhs._stack_prototype > rhs._stack_prototype);
-    }
+		template<typename Tn, typename Cont>
+		friend bool operator==( const ft::Stack< Tn, Cont > & lhs, const ft::Stack< Tn,Cont > & rhs );
+		
+		template<typename Tn, typename Cont>
+		friend bool operator!=( const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs );
+			
+		template<typename Tn, typename Cont>
+		friend bool operator<(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs );
+			
+		template<typename Tn, typename Cont>
+		friend bool operator<=(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs);
+			
+		template<typename Tn, typename Cont>
+		friend bool operator>(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs );
 
-    };
+		template<typename Tn, typename Cont>
+		friend bool operator>=(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs);
+	};
+	
+
+	template<typename Tn, typename Cont>
+	bool operator==(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs ){
+			return (lhs._stack_prototype == rhs._stack_prototype);
+		}
+	template<typename Tn, typename Cont>
+	bool operator!=(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs ){
+		return (lhs._stack_prototype != rhs._stack_prototype);
+	}
+		
+	template<typename Tn, typename Cont>
+	 bool operator<(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs ){
+		return (lhs._stack_prototype < rhs._stack_prototype);
+	}
+		
+	template<typename Tn, typename Cont>
+	bool operator<=(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs){
+		return (lhs._stack_prototype <= rhs._stack_prototype);
+	}
+		
+	template<typename Tn, typename Cont>
+	bool operator>(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs ){
+		return (lhs._stack_prototype > rhs._stack_prototype);
+	}
+
+	template<typename Tn, typename Cont>
+	bool operator>=(  const ft::Stack<Tn,Cont>& lhs, const ft::Stack<Tn,Cont>& rhs ){
+		return (lhs._stack_prototype >= rhs._stack_prototype);
+	}
+
+
 }

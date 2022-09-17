@@ -48,16 +48,16 @@ namespace ft
         typedef typename Allocator::template rebind< ft::Node<value_type> >::other		allocatorNode;
         key_compare _comp; 
         allocator_type _alloc;
-        ft::Tree<value_type, allocatorNode, value_compare>  _tree;
+        ft::Tree<value_type, allocatorNode, value_compare>  _Tree;
 
     public:
-        Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp)){};
+        Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _Tree(value_compare(comp)){};
         template< class InputIt >
-        Map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp) , _alloc(alloc), _tree(value_compare(comp))
+        Map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp) , _alloc(alloc), _Tree(value_compare(comp))
         {
             insert(first, last);
         };
-        Map( const Map& x):_comp(x._comp), _tree(value_compare(x._comp)){ _tree = x._tree; };
+        Map( const Map& x):_comp(x._comp), _Tree(value_compare(x._comp)){ _Tree = x._Tree; };
         ~Map(){};
 
         Map& operator=(const Map& other )
@@ -66,30 +66,50 @@ namespace ft
             {
             _comp = other._comp;
             _alloc = other._alloc;
-            _tree = other._tree;
+            _Tree = other._Tree;
             }
             return *this;
         };
 
 
 
-        bool operator==(const Map& other )
-{	        return (_tree == other._tree); };
+        bool operator==(const Map& other ){ return (_Tree == other._Tree); };
 
         bool operator!=(const Map& other )
         {
                 return!(*this == other);
         };
-        allocator_type get_allocator() const {return _alloc;}; 
-        ft::pair<iterator, bool> insert( const value_type& value )
-        {
-            ft::Node<value_type>    *the_new = new ft::Node<value_type>(value);
-            _tree.add(the_new);
-            return (ft::make_pair(iterator(the_new), true));
-        };
-        iterator find (const key_type& k) {	return (iterator(_tree.treeSearch(k)));	}
+		bool	operator<(const Map& y){ 
+			
+			const_iterator it_x = begin();
+			const_iterator it_y = y.begin();			
 
-		const_iterator find (const key_type& k) const {	return const_iterator(_tree.treeSearch(k));	}
+			const_iterator itx_end = end();
+			const_iterator ity_end = y.end();
+
+			while (it_x != itx_end && it_y != ity_end) {
+				if (it_x->first != it_y->first)
+					return (it_x->first < it_y->first);
+				else if (it_x->second != it_y->second)
+					return (it_x->second < it_y->second);
+				++it_x;
+				++it_y;
+			}
+			if (size() < y.size())
+				return true;
+			return false; 
+
+		 };
+        bool	operator > ( const Map& y){ return (y < *this); };
+
+	    bool	operator <= ( const Map& y){ return !( y < *this); };
+		
+		bool	operator >= ( const Map& y){ return !(*this < y); };
+        allocator_type get_allocator() const {return _alloc;}; 
+
+        iterator find (const key_type& k) {	return (iterator(_Tree.TreeSearch(k)));	}
+
+		const_iterator find (const key_type& k) const {	return const_iterator(_Tree.TreeSearch(k));	}
         
 		size_type count (const key_type& k) const {
             // std::cout<<  " puk\n";
@@ -98,41 +118,36 @@ namespace ft
 			if (find(k) == end())
 				return 0;
 			return 1; };
-        iterator insert( iterator hint, const value_type& value )
-        {
-            (void)hint;	
-            ft::Node<value_type>    *the_new = new ft::Node<value_type>(value);
-            _tree.add(the_new);
-            return (iterator(the_new));
-        };
+        ft::pair<iterator,bool> insert(const value_type& v) { return (_Tree.insertNode(v)); }
         template< class InputIt >
         void insert( InputIt first, InputIt last )
         {
-          
+
             while (first != last){
-                 ft::Node<value_type>    *the_new = new ft::Node<value_type>(ft::make_pair(first->first, first->second));
-				_tree.add(the_new);
-				++first;}
+                //  ft::Node<value_type>    *the_new = new ft::Node<value_type>(ft::make_pair(first->first, first->second));
+				_Tree.insertNode(ft::make_pair(first->first, first->second));
+				++first;
+                }
         };
-        iterator begin(){return iterator(_tree.find_min(_tree.head));};
-        const_iterator begin() const{return const_iterator(_tree.find_min(_tree.head));};
-        iterator end(){return iterator(_tree.find_max(_tree.head));};
-        const_iterator end() const{return const_iterator(_tree.find_max(_tree.head));};
-        size_type size() const{return _tree._size;};
+        iterator begin(){return iterator(_Tree.find_min(_Tree._root));};
+        const_iterator begin() const{return const_iterator(_Tree.find_min(_Tree._root));};
+        iterator end(){return iterator(_Tree.find_max(_Tree._root));};
+        const_iterator end() const{return const_iterator(_Tree.find_max(_Tree._root));};
+        size_type size() const{return (_Tree._size);};
 
 
 
-        reverse_iterator rbegin(){return reverse_iterator(iterator(_tree.find_min(_tree.head)));};
-        const_reverse_iterator rbegin() const{return const_reverse_iterator(const_iterator(_tree.find_min(_tree.head)));};
-        reverse_iterator rend(){return reverse_iterator(iterator(_tree.find_max(_tree.head)));};
-        const_reverse_iterator rend() const{return const_reverse_iterator(const_iterator(_tree.find_max(_tree.head)));};
+        reverse_iterator rbegin(){return reverse_iterator(iterator(_Tree.find_min(_Tree._root)));};
+        const_reverse_iterator rbegin() const{return const_reverse_iterator(const_iterator(_Tree.find_min(_Tree._root)));};
+        reverse_iterator rend(){return reverse_iterator(iterator(_Tree.find_max(_Tree._root)));};
+        const_reverse_iterator rend() const{return const_reverse_iterator(const_iterator(_Tree.find_max(_Tree._root)));};
 
 
         // erase
         void erase( iterator pos )
         {
             // std::cout << "here 3" << std::endl;
-            _tree.deleteNode(pos);
+            _Tree.rbTreeDelete(pos._iter);
         };
 // void erase( iterator first, iterator last );
 

@@ -16,13 +16,13 @@ namespace ft
     // template <class Iter>
     // class iterator_traits
     // {
-    //     typedef typename Iter::difference_type difference_type;
+    //     typedef typename ptrdif_t difference_type;
     //     typedef typename Iter::value_type  value_type;
     //     typedef typename Iter::pointer pointer;
     //     typedef typename Iter::reference reference;
     //     typedef typename Iter::iterator_category iterator_category;
     // };
-    	template< class T >
+    template< class T >
 	struct iterator_traits
     {
 
@@ -165,7 +165,7 @@ namespace ft
 
 
     template <class T>
-    struct IteratorForMap
+    struct IteratorForMap : ft::iterator<std::random_access_iterator_tag, T>
     {
         public:
             typedef T* iterator_type;
@@ -181,6 +181,9 @@ namespace ft
         public:
             IteratorForMap(T* val = 0) : _iter(val) {};
             // IteratorForMap(const T* val = nullptr) : _iter(val) {};
+            // template <class Tp>
+			// IteratorForMap(const IteratorForMap<Tp> &cp, typename std::enable_if<!ft::is_convertible<Up, iterator_type>::value>::type* = 0):_iter(cp.base()) {};
+
             IteratorForMap(const IteratorForMap& other) : _iter(other._iter) {};
             IteratorForMap &operator=(IteratorForMap const  &cp){
 				_iter = cp._iter;
@@ -201,24 +204,18 @@ namespace ft
 				return (x);
 			}
 
-            iterator_type next(){
-                //  std::cout << "here" << std::endl;
-            iterator_type y;
-            if (_iter->right->isNil == false){
-                return(min(_iter->right));}
-            y = _iter->parent;
-        
-            while (y->parent != 0 && _iter == y->right){ // for case if y is right kid of it's parent
-               
-                _iter = y;
-                y = y->parent;
-            }
-            // if (y->parent == 0)
-            //     return y;
-
-            
-            return (y);
-        }
+			iterator_type next(){
+				iterator_type y;
+				if (_iter->right->isNil == false)
+					return(min(_iter->right));
+				y = _iter->parent;
+			
+				while (y->isNil == false && _iter == y->right){ // for case if y is right kid of it's parent
+					_iter = y;
+					y = y->parent;
+				}
+				return (y);
+			}
 
 			iterator_type prev(){
                 // std::cout << "here" << std::endl;

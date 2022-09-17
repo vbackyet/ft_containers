@@ -11,6 +11,10 @@
 // • std::make_pair
 namespace ft
 {
+
+
+	// 	template <class _T1, class _T2> 
+	// struct is_convertible: public ft::integral_constant<bool,  __is_convertible_to(_T1, _T2)> {};
     // enable_if
   template<bool v>
     struct integral_constant
@@ -100,13 +104,13 @@ namespace ft
 			pair (const pair<U,V>& pr):first(pr.first), second(pr.second){ 	};
 		pair (const first_type& a, const second_type& b):first(a), second(b){};
 
-		pair& operator= (const pair& pr){
-			if (this != &pr){
-				first = pr.first;
-				second = pr.second;
-			}
-			return *this;
-		}
+		// pair& operator=(const pair& pr){
+		// 	if (this != &pr){
+		// 		first = pr.first;
+		// 		second = pr.second;
+		// 	}
+		// 	return *this;
+		// }
 	};
 
 	// make pair
