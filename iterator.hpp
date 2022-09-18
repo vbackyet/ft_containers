@@ -13,20 +13,20 @@ namespace ft
     struct random_access_iterator_tag {};
 
 
-    // template <class Iter>
-    // class iterator_traits
-    // {
-    //     typedef typename ptrdif_t difference_type;
-    //     typedef typename Iter::value_type  value_type;
-    //     typedef typename Iter::pointer pointer;
-    //     typedef typename Iter::reference reference;
-    //     typedef typename Iter::iterator_category iterator_category;
-    // };
-    template< class T >
-	struct iterator_traits
+    template <class Iter>
+    struct iterator_traits
     {
-
+        typedef  ptrdiff_t difference_type;
+        typedef typename Iter::value_type  value_type;
+        typedef typename Iter::pointer pointer;
+        typedef typename Iter::reference reference;
+        typedef typename Iter::iterator_category iterator_category;
     };
+    // template< class T >
+	// struct iterator_traits
+    // {
+
+    // };
 	template< class T >
 	struct iterator_traits<T*>
 	{
@@ -115,22 +115,28 @@ namespace ft
 
         public:
             typedef T iterator_type;
-            // typedef    pointer;
+
+			typedef typename	iterator_traits<T>::difference_type		difference_type;
+			typedef typename	iterator_traits<T>::value_type			value_type;
+			typedef typename	iterator_traits<T>::pointer				pointer;
+			typedef typename	iterator_traits<T>::reference 			reference;
+			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
+
         	ReverseIteratorForVector():_elem(0){};
-            
+			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
             // template <class _Up>// для const T*
 			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
             // T base() const  { return _elem; }
 
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
-            ReverseIteratorForVector(typename ReverseIteratorForVector::pointer vecPoint):_elem(vecPoint){};
+            ReverseIteratorForVector(pointer vecPoint):_elem(vecPoint){};
 
 			~ReverseIteratorForVector() {};
 
             bool operator==(ReverseIteratorForVector &right){return (_elem == right._elem);}
             bool operator!=(ReverseIteratorForVector &right){return (_elem != right._elem);}
-            typename ReverseIteratorForVector::reference operator*(void) const { return (*_elem); };
-            typename ReverseIteratorForVector::pointer operator->(void) const { return &(*_elem); };
+            reference operator*(void) { return (*_elem); };
+            pointer operator->(void) { return &(*_elem); };
 
 
 
@@ -165,7 +171,7 @@ namespace ft
 
 
     template <class T>
-    struct IteratorForMap : ft::iterator<std::random_access_iterator_tag, T>
+    struct IteratorForMap 
     {
         public:
             typedef T* iterator_type;

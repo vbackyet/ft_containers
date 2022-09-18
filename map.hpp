@@ -161,12 +161,29 @@ namespace ft
 
         size_type erase( const Key& key )
         {
-			Node<value_type>* rmNode = _Tree.treeSearch(key);
-			if (rmNode != end()){
+			Node<value_type>* rmNode = _Tree.TreeSearch(key);
+			if (rmNode != end()._iter){
 				_Tree.rbTreeDelete(rmNode);
 				return 1;}
 			else
 				return 0;
+        }
+        bool empty() const  
+        {
+            if (size() > 0)
+                return false;
+            return true; 
+        }
+        std::pair<iterator,iterator> equal_range( const Key& key )
+        {
+            return (_Tree.TreeSearch(key)->keyValue);
+        }
+
+        mapped_type& operator[]( const Key& key )
+        {
+            if (equal_range(key) == this->end())
+				insert(ft::make_pair(k, mapped_type()));
+            return equal_range(key)->second;
         }
 
         void swap (Map& x){	std::swap(x, *this); }
