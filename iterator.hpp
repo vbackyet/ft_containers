@@ -123,7 +123,7 @@ namespace ft
 			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
 
         	ReverseIteratorForVector():_elem(0){};
-			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
+			// explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
             // template <class _Up>// для const T*
 			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
             // T base() const  { return _elem; }

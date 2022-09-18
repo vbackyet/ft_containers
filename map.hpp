@@ -142,8 +142,16 @@ namespace ft
         reverse_iterator rend(){return reverse_iterator(iterator(_Tree.find_max(_Tree._root)));};
         const_reverse_iterator rend() const{return const_reverse_iterator(const_iterator(_Tree.find_max(_Tree._root)));};
 
-
-        // erase
+        // iterator find( const Key& key )
+        // {
+        //     return (_Tree.TreeSearch(key));
+        // }
+        
+        // const_iterator find( const Key& key ) const
+        // {
+        //     return (_Tree.TreeSearch(key));    
+        // }
+                // erase
         void erase( iterator pos )
         {
             // std::cout << "here 3" << std::endl;
@@ -174,17 +182,35 @@ namespace ft
                 return false;
             return true; 
         }
-        std::pair<iterator,iterator> equal_range( const Key& key )
-        {
-            return (_Tree.TreeSearch(key)->keyValue);
-        }
+		pair<iterator,iterator> equal_range (const key_type& k) {return (_Tree.equal_range_unique(k)); };
+			
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const {return (_Tree.equal_range_unique(k)); };
 
-        mapped_type& operator[]( const Key& key )
-        {
-            if (equal_range(key) == this->end())
+		mapped_type& operator[] (const key_type& k)	{
+			iterator tmp = this->find(k);
+
+			if (tmp == this->end())
 				insert(ft::make_pair(k, mapped_type()));
-            return equal_range(key)->second;
-        }
+			tmp = this->find(k);
+			return ((*tmp).second);
+		}
+
+		mapped_type& at (const key_type& k){
+			iterator tmp = this->find(k);
+
+			if (tmp == this->end())
+				throw std::out_of_range("");
+			return ((*tmp).second);
+		}
+		
+		const mapped_type& at (const key_type& k) const {
+			iterator tmp = this->find(k);
+
+			if (tmp == this->end())
+				throw std::out_of_range("");
+			return ((*tmp).second);
+		}
+
 
         void swap (Map& x){	std::swap(x, *this); }
 
