@@ -71,7 +71,7 @@ namespace ft
 
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
             // IteratorForVector(typename IteratorForVector::pointer vecPoint):_elem(vecPoint){};
-
+            T base() const  { return _elem; }
 			~IteratorForVector() {};
 
             bool operator==(IteratorForVector &right){return (_elem == right._elem);}
@@ -123,10 +123,10 @@ namespace ft
 			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
 
         	ReverseIteratorForVector():_elem(0){};
-			// explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
-            // template <class _Up>// для const T*
-			// IteratorForVector(const IteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
-            // T base() const  { return _elem; }
+			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
+            template <class _Up>// для const T*
+			ReverseIteratorForVector(const ReverseIteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
+            T base() const  { return _elem; }
 
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
             ReverseIteratorForVector(pointer vecPoint):_elem(vecPoint){};
@@ -187,9 +187,9 @@ namespace ft
         public:
             IteratorForMap(T* val = 0) : _iter(val) {};
             // IteratorForMap(const T* val = nullptr) : _iter(val) {};
-            // template <class Tp>
-			// IteratorForMap(const IteratorForMap<Tp> &cp, typename std::enable_if<!ft::is_convertible<Up, iterator_type>::value>::type* = 0):_iter(cp.base()) {};
-
+            template <class Tp>
+			IteratorForMap(const IteratorForMap<Tp> &cp, typename std::enable_if<!std::is_convertible<Tp, iterator_type>::value>::type* = 0):_iter(cp.base()) {};
+            iterator_type base() const {return _iter;}
             IteratorForMap(const IteratorForMap& other) : _iter(other._iter) {};
             IteratorForMap &operator=(IteratorForMap const  &cp){
 				_iter = cp._iter;

@@ -70,7 +70,7 @@ namespace ft
             }
             return *this;
         };
-
+        size_type max_size() const { return (allocatorNode().max_size());};
 
 
         bool operator==(const Map& other ){ return (_Tree == other._Tree); };
@@ -129,6 +129,11 @@ namespace ft
 				++first;
                 }
         };
+        iterator insert( iterator hint, const value_type& value )
+        {
+            (void)hint;		
+			return (iterator(_Tree.insertNode(value).first));
+        }
         iterator begin(){return iterator(_Tree.find_min(_Tree._root));};
         const_iterator begin() const{return const_iterator(_Tree.find_min(_Tree._root));};
         iterator end(){return iterator(_Tree.find_max(_Tree._root));};
