@@ -51,7 +51,7 @@ namespace ft
         ft::Tree<value_type, allocatorNode, value_compare>  _Tree;
 
     public:
-        Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _Tree(value_compare(comp)){};
+        explicit Map( const Compare& comp = key_compare(),const Allocator& alloc = allocator_type() ): _comp(comp) , _alloc(alloc), _Tree(value_compare(comp)){};
         template< class InputIt >
         Map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator() ): _comp(comp) , _alloc(alloc), _Tree(value_compare(comp))
         {
@@ -229,5 +229,7 @@ namespace ft
 
 		const_iterator upper_bound (const key_type& key) const  { return (_Tree.upper_bound(key)); };
         // rend
+        		key_compare key_comp() const{ return (_comp); }; 
+		value_compare value_comp() const { return value_compare(key_comp()); } 
     };
 };
