@@ -116,20 +116,22 @@ namespace ft
         public:
             typedef T iterator_type;
 
-			typedef typename	iterator_traits<T>::difference_type		difference_type;
-			typedef typename	iterator_traits<T>::value_type			value_type;
-			typedef typename	iterator_traits<T>::pointer				pointer;
-			typedef typename	iterator_traits<T>::reference 			reference;
-			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
+			typedef typename	iterator_traits<iterator_type>::difference_type		difference_type;
+			typedef typename	iterator_traits<iterator_type>::value_type			value_type;
+			typedef typename	iterator_traits<iterator_type>::pointer				pointer;
+			typedef typename	iterator_traits<iterator_type>::reference 			reference;
+			typedef typename	iterator_traits<iterator_type>::iterator_category	iterator_category;
 
         	ReverseIteratorForVector():_elem(0){};
 			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
             template <class _Up>// для const T*
 			ReverseIteratorForVector(const ReverseIteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
+            template <class Iter>
+            ReverseIteratorForVector& operator=(const ReverseIteratorForVector<Iter>& rev_it) { _elem = rev_it.base(); return *this; }
             T base() const  { return _elem; }
 
 			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
-            ReverseIteratorForVector(pointer vecPoint):_elem(vecPoint){};
+            // ReverseIteratorForVector(pointer vecPoint):_elem(vecPoint){};
 
 			~ReverseIteratorForVector() {};
 
@@ -267,9 +269,10 @@ namespace ft
 			};
             reference operator*() {return _iter->keyValue;}
 			const_reference operator*() const {return _iter->keyValue;}
-			pointer operator->() {return &(_iter->keyValue);}
+			pointer operator->() {return pointer(&_iter->keyValue);}
 			const_pointer operator->() const {return &(_iter->keyValue);}
-			
+
+
             template <class Iter1>
             
             bool operator==(const IteratorForMap<Iter1>& y) {

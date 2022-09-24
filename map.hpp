@@ -230,6 +230,32 @@ namespace ft
 		const_iterator upper_bound (const key_type& key) const  { return (_Tree.upper_bound(key)); };
         // rend
         		key_compare key_comp() const{ return (_comp); }; 
-		value_compare value_comp() const { return value_compare(key_comp()); } 
+		value_compare value_comp() const { return value_compare(key_comp()); }
+        		friend bool	operator < (const Map& x, const Map& y){ 
+			
+			const_iterator itx = x.begin();
+			const_iterator ity = y.begin();			
+
+			const_iterator itx_end = x.end();
+			const_iterator ity_end = y.end();
+
+			while (itx != itx_end && ity != ity_end) {
+				if (itx->first != ity->first)
+					return (itx->first < ity->first);
+				else if (itx->second != ity->second)
+					return (itx->second < ity->second);
+				++itx;
+				++ity;
+			}
+			if (x.size() < y.size())
+				return true;
+			return false; 
+
+		 };
+        friend bool	operator > (const Map& x, const Map& y){ return (y < x); };
+
+		friend bool	operator <= (const Map& x, const Map& y){ return !( y < x); };
+		
+		friend bool	operator >= (const Map& x, const Map& y){ return !(x < y); }; 
     };
 };
