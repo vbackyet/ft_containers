@@ -134,18 +134,18 @@ namespace ft
             (void)hint;		
 			return (iterator(_Tree.insertNode(value).first));
         }
-        iterator begin(){return iterator(_Tree.find_min(_Tree._root));};
-        const_iterator begin() const{return const_iterator(_Tree.find_min(_Tree._root));};
-        iterator end(){return iterator(_Tree.find_max(_Tree._root));};
-        const_iterator end() const{return const_iterator(_Tree.find_max(_Tree._root));};
+		iterator begin() { return iterator(_Tree.begin()); };
+		const_iterator begin() const { return const_iterator(_Tree.begin()); };			
+		iterator end()  { return iterator(_Tree.end()); };
+		const_iterator end() const { return const_iterator(_Tree.end()); };
+
+		reverse_iterator rbegin() { return reverse_iterator(iterator(_Tree.end()));};
+		const_reverse_iterator rbegin() const  { return const_reverse_iterator(const_iterator(_Tree.end()));};
+		reverse_iterator rend()  { return reverse_iterator(iterator(_Tree.begin()));};
+		const_reverse_iterator rend() const { return const_reverse_iterator(const_iterator(_Tree.begin()));};
         size_type size() const{return (_Tree._size);};
 
 
-
-        reverse_iterator rbegin(){return reverse_iterator(iterator(_Tree.find_min(_Tree._root)));};
-        const_reverse_iterator rbegin() const{return const_reverse_iterator(const_iterator(_Tree.find_min(_Tree._root)));};
-        reverse_iterator rend(){return reverse_iterator(iterator(_Tree.find_max(_Tree._root)));};
-        const_reverse_iterator rend() const{return const_reverse_iterator(const_iterator(_Tree.find_max(_Tree._root)));};
 
         // iterator find( const Key& key )
         // {
