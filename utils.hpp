@@ -16,38 +16,39 @@ namespace ft
 	// 	template <class _T1, class _T2> 
 	// struct is_convertible: public ft::integral_constant<bool,  __is_convertible_to(_T1, _T2)> {};
     // enable_if
-  template<bool v>
-    struct integral_constant
-    {
-      static const bool value = v;
-    //   typedef _Tp                           value_type;
-    //   typedef integral_constant<_Tp, __v>   type;
-    //   constexpr operator value_type() const { return value; }
-    };
-  /// The type used as a compile-time boolean with true value.
-  typedef integral_constant<true>     true_type;
-
-  /// The type used as a compile-time boolean with false value.
-  typedef integral_constant<false>    false_type;
-    
+	// integral_constant
+	template <class T, bool v>
+	struct integral_constant 
+	{
+		static const bool value = v;
+		typedef bool value_type;
+		typedef integral_constant<T,v> type;
+		operator value_type(){ 
+			return v; }
+	};
 
 
-    template <class> struct is_integral						    : public false_type {};
-    template <> struct is_integral <bool>						: public true_type {};	//explicit template specialization
-    template <> struct is_integral <char>						: public true_type {};
-    template <> struct is_integral <char16_t>					: public true_type {};
-    template <> struct is_integral <char32_t>					: public true_type {};
-    template <> struct is_integral <wchar_t>					: public true_type {};
-    template <> struct is_integral <signed char>				: public true_type {};
-    template <> struct is_integral <short int>					: public true_type {};
-    template <> struct is_integral <int>						: public true_type {};
-    template <> struct is_integral <long int>					: public true_type {};
-    template <> struct is_integral <long long int>				: public true_type {};
-    template <> struct is_integral <unsigned char>				: public true_type {};
-    template <> struct is_integral <unsigned short int>			: public true_type {};
-    template <> struct is_integral <unsigned int>				: public true_type {};
-    template <> struct is_integral <unsigned long int>			: public true_type {};
-    template <> struct is_integral <unsigned long long int>		: public true_type {};
+	typedef ft::integral_constant<bool,true>	true_type;
+	typedef ft::integral_constant<bool,false>	false_type;
+
+
+	// is_integral
+	template <class> struct is_integral							: public false_type {};	//primary template
+	template <> struct is_integral <bool>						: public true_type {};	//explicit template specialization
+	template <> struct is_integral <char>						: public true_type {};
+	template <> struct is_integral <char16_t>					: public true_type {};
+	template <> struct is_integral <char32_t>					: public true_type {};
+	template <> struct is_integral <wchar_t>					: public true_type {};
+	template <> struct is_integral <signed char>				: public true_type {};
+	template <> struct is_integral <short int>					: public true_type {};
+	template <> struct is_integral <int>						: public true_type {};
+	template <> struct is_integral <long int>					: public true_type {};
+	template <> struct is_integral <long long int>				: public true_type {};
+	template <> struct is_integral <unsigned char>				: public true_type {};
+	template <> struct is_integral <unsigned short int>			: public true_type {};
+	template <> struct is_integral <unsigned int>				: public true_type {};
+	template <> struct is_integral <unsigned long int>			: public true_type {};
+	template <> struct is_integral <unsigned long long int>		: public true_type {};
 
   // equal
 	// equal

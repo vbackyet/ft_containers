@@ -21,9 +21,9 @@ namespace ft
            typedef typename allocator_type::reference   reference; // указатель 
            typedef typename allocator_type::const_reference   const_reference; // указатель 
            typedef IteratorForVector<T> iterator;
-           typedef ReverseIteratorForVector<T*> reverse_iterator;
+           typedef ReverseIteratorForVector<iterator> reverse_iterator;
            typedef IteratorForVector<const T> const_iterator;
-           typedef ReverseIteratorForVector<const T*> const_reverse_iterator;
+           typedef ReverseIteratorForVector<const_iterator> const_reverse_iterator;
         private:
             size_type _size_of_vector; // размер вектора 
             allocator_type _alloc; //  
@@ -177,7 +177,8 @@ namespace ft
             // std::cout << _size_of_vector <<   "    " << _capacity  <<"  cap_new! \n";
             for(int i = 0; i <  (int) count; i++)
                 _start[i] = value; 
-            _size_of_vector = count;           
+            _size_of_vector = count;  
+         
         }
         template< class InputIt >
         void assign( InputIt first, InputIt last,  typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type* = 0 )
@@ -193,7 +194,7 @@ namespace ft
                 _capacity = _size_of_vector;
                 _start = _alloc.allocate(_capacity);
             }
-            
+            // _capacity = _size_of_vector;
             for (int i = 0;	first != last; ++first){
                 _alloc.construct(_start + i, *first);
                 i++;
@@ -294,31 +295,44 @@ namespace ft
     template< class InputIt >    
     void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, iterator>::type* = 0 )
     {
+				int		indexPos = pos - this->begin();
+				int		n = last - first;
+				
+				
+				if (n <= 0)
+					return ;
 
+				int		indexOld = _size_of_vector - 1;
+				int		indexNew = _size_of_vector + n - 1;
+				int		sizeNew = _size_of_vector + n;
+				int		capNew = _capacity;
 
-        int count = last - first;
-        int insertStart = pos - this->begin();
-        int oldEnd = _size_of_vector - 1;
-        int newEnd = _size_of_vector - 1 + count;
-        if (_capacity*2 < (_size_of_vector + count))
-            reserve(_size_of_vector + count);
-        else if (_capacity < (_size_of_vector + count))
-            reserve(_capacity*2);
-        // std::cout<< size_of_vec << " puk "<< std::endl;
-        ///////////// cycle 
-        while(newEnd > (insertStart + (int)count - 1))
-        {
-            _start[newEnd--] = _start[oldEnd--];
-            // i++;
-        }
-        // std::cout<< "|" << insertStart << "| :unsertStart " << newEnd << " newEnd " << std::endl;
-        while(newEnd >= insertStart)
-        {
-            _start[newEnd--] = *first++;
-        }
-        _size_of_vector += count;
+				if (_capacity < sizeNew)
+				{					
+					pointer		_oldp = _start;
 
-        
+					if (_capacity * 2 < sizeNew)
+						capNew = sizeNew;
+					else if (_capacity < sizeNew)
+						capNew = _capacity * 2;
+					_start = _alloc.allocate(capNew);
+					for (size_type i = 0; i < _size_of_vector; ++i)
+						_alloc.construct(_start + i, *(_oldp + i));
+					for (size_type i = 0; i < _size_of_vector; ++i)
+						_alloc.destroy(_oldp + i);
+					_alloc.deallocate(_oldp, _capacity);
+
+				}
+
+				while (indexOld >= indexPos)
+					_start[indexNew--] = _start[indexOld--];
+				
+				while (indexNew >= 0 && indexNew >= indexPos)
+					_start[indexNew--] = *--last;
+
+				
+				_size_of_vector += n;
+				_capacity = capNew;
     }
     /// erase
 
@@ -341,25 +355,28 @@ namespace ft
     }
     iterator erase( iterator first, iterator last )
     {
-        if (first < this->begin() || last >= this->end())
-            throw std::out_of_range("");
-        int delta = last - first;
-        int strtInsrt = first - this->begin();
-        size_type i;
-        for ( i = strtInsrt; (int )i <= delta + strtInsrt ; i++)
-        {
-            _alloc.destroy(_start + i);
-           _start[i] = _start[i+delta];
-           
-        }
-        while (i++ < _size_of_vector)
-        {
-            _alloc.destroy(_start + i);
-           
-        }
+        if (first < this->begin() || first >= this->end() || last < this->begin() || last >= this->end())
+            throw std::out_of_range("Vector");
 
-        _size_of_vector-= delta;
-        return (_start + strtInsrt);
+        unsigned long indFirst = first - this->begin();
+        unsigned long indFirstOld = indFirst;
+        unsigned long indLast = last - this->begin();
+
+
+        while (indFirst < _size_of_vector)
+        {
+            _alloc.destroy(_start + indFirst);
+            if (indLast < _size_of_vector)
+            {
+                _start[indFirst] = _start[indLast];
+                ++indLast;
+            }
+            ++indFirst;
+        };
+        
+        _alloc.destroy(_start + indFirst);
+        _size_of_vector = _size_of_vector - (last -first);
+        return (_start + indFirstOld );
     }
     void pop_back()
     {

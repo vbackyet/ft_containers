@@ -50,6 +50,7 @@ namespace ft
     template <class Category ,class T, class pointer_ = T*, class reference_ = T&, class distance_ = ptrdiff_t >
     struct iterator
     {
+        typedef ptrdiff_t							difference_type;
        typedef Category   iterator_category;
        typedef T value_type;
        typedef pointer_ pointer;
@@ -226,30 +227,23 @@ namespace ft
 			}
 
 			iterator_type prev(){
-                // std::cout << "here" << std::endl;
 				iterator_type y;
 
 				if (_iter->isNil == true || _iter->left->isNil == false)
 					return(max(_iter->left));
 				y = _iter->parent;
-				while (y->parent != 0 && _iter == y->left){ // for case if y is left kid of it's parent
-                
+				while (y->isNil == false && _iter == y->left){ // for case if y is left kid of it's parent
 					_iter = y;
 					y = y->parent;}
-                    
-                // if (y->parent == 0)
-                //     return y;
 				return (y);
 			}
 
 			IteratorForMap& operator++() {
-      
 				_iter = next();
 				return (*this);
 			}
 
 			IteratorForMap operator++(int){ 
-       
 				IteratorForMap tem(*this);
 				++(*this);
 				return tem;
