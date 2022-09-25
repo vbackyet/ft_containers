@@ -40,7 +40,7 @@ namespace ft
             // _alloc = 0 ;
             _size_of_vector = 0;
             // _alloc = allocator_type();
-            _start= NULL;
+            _start= _alloc.allocate(0);
             _capacity = 0;
 
         } 
@@ -62,13 +62,23 @@ namespace ft
             this->assign(first, last);
         };   
 
+
+        Vector (const Vector& x): _size_of_vector(x._size_of_vector), _capacity(x._capacity){
+        _alloc = allocator_type();
+        _start = _alloc.allocate(_capacity);
+        for (size_type i = 0; i < _size_of_vector; ++i)
+                _alloc.construct(_start + i, *(x._start + i));
+		};
+			
+
+
         Vector &operator=(const Vector& x)
         {
 
             if (this != &x)
             {
                 // clear();
-                // _alloc.deallocate(_start, _capacity); // вызывается ошибка
+				_alloc.deallocate(_start, _capacity); 
                 _size_of_vector = x._size_of_vector;
                 _capacity = x._capacity;
                 _start = _alloc.allocate(_capacity);
@@ -142,11 +152,11 @@ namespace ft
 			// friend void swap (vector<TF, AllocF>& x, vector<TF, AllocF>& y);
 
         // консруктор копирования 
-        Vector(const Vector& prev_vector)
-        { 
-            *this = prev_vector;
+        // Vector(const Vector& prev_vector)
+        // { 
+        //     *this = prev_vector;
 
-        }
+        // }
 
 
         	// 		Vector (const Vector& prev_vector): _size_of_vector(x._size_of_vector), _capacity(x._capacity){
@@ -246,10 +256,10 @@ namespace ft
     T* data() { return _start; }
     const T* data() const { return _start; }
 
-    		// reverse_iterator rbegin(){return reverse_iterator(end());};
-			// const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
-			// reverse_iterator rend(){return reverse_iterator(begin());};
-			// const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
+    		// ReverseIteratorForVector rbegin(){return ReverseIteratorForVector(end());};
+			// const_ReverseIteratorForVector rbegin() const {return const_ReverseIteratorForVector(end());};
+			// ReverseIteratorForVector rend(){return ReverseIteratorForVector(begin());};
+			// const_ReverseIteratorForVector rend() const {return const_ReverseIteratorForVector(begin());};
 
     /////////////////////////// MODIFIERS ///////////////////////////////
     void clear()
@@ -304,8 +314,8 @@ namespace ft
 
 				int		indexOld = _size_of_vector - 1;
 				int		indexNew = _size_of_vector + n - 1;
-				int		sizeNew = _size_of_vector + n;
-				int		capNew = _capacity;
+				unsigned long		sizeNew = _size_of_vector + n;
+				unsigned long		capNew = _capacity;
 
 				if (_capacity < sizeNew)
 				{					
@@ -419,8 +429,8 @@ namespace ft
 			const_iterator end() const{ return (_start + _size_of_vector);}
 
             /// rbegin
-			reverse_iterator rbegin(){return reverse_iterator(end());};
-			const_reverse_iterator rbegin() const {return const_reverse_iterator(end());};
+			reverse_iterator rbegin(){return reverse_iterator(end() - 1 );};
+			const_reverse_iterator rbegin() const {return const_reverse_iterator(end() -1);};
 			reverse_iterator rend(){return reverse_iterator(begin());};
 			const_reverse_iterator rend() const {return const_reverse_iterator(begin());};
 
@@ -445,8 +455,8 @@ namespace ft
 // LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type
 // 	(until C++20)
 
-// reverse_iterator 	std::reverse_iterator<iterator>
-// const_reverse_iterator 	std::reverse_iterator<const_iterator>
+// ReverseIteratorForVector 	std::ReverseIteratorForVector<iterator>
+// const_ReverseIteratorForVector 	std::ReverseIteratorForVector<const_iterator>
     };
 
 	template <class TF, class AllocF>

@@ -87,6 +87,7 @@
         "*.ipp": "cpp",
         "filesystem": "cpp",
         "version": "cpp",
-        "__memory": "cpp"
+        "__memory": "cpp",
+        "__functional_03": "cpp"
     }
 }

@@ -132,7 +132,7 @@ int main() {
 
 
 
-//     _vector<T> vector;
+    _vector<T> vector;
 //     std::vector<int> v;
 //     vector.assign(10, 1);
 
@@ -160,31 +160,30 @@ int main() {
 
 
     std::vector<int> v;
-    std::map<T, V> mp;
+    _map<T, V> mp;
 
 
-    mp.insert(std::make_pair(5, 5));
-    mp.insert(std::make_pair(3, 3));
-    mp.insert(std::make_pair(7, 7));
-    typename std::map<T, V>::reverse_iterator rit = mp.rbegin();
-    // typename std::map<T, V>::reverse_iterator rit2 = mp.rend();
-    std::cout << rit->first << rit->second <<std::endl;
+    mp.insert(_make_pair(5, 5));
+    mp.insert(_make_pair(3, 3));
+    mp.insert(_make_pair(7, 7));
+    typename _map<T, V>::reverse_iterator rit = mp.rbegin();
+    typename _map<T, V>::reverse_iterator rit2 = mp.rend();
+    std::cout << rit2->first << "   " <<std::endl;
+    rit++;
+    rit2--;
+
+    v.push_back(rit2->first);
+    rit++;
+    v.push_back(*rit == *rit2);
+    rit2--;
     v.push_back(rit->first);
-    // rit++;
-    // rit2--;
-    // v.push_back(rit->first);
-    // v.push_back(rit2->first);
-    // rit++;
-    // v.push_back(*rit == *rit2);
-    // rit2--;
-    // v.push_back(rit->first);
-    // v.push_back(rit2->first);
-    // v.push_back(*rit2 > *rit);
-    // v.push_back(*rit2 < *rit);
-    // v.push_back((--rit)->first);
-    // v.push_back((++rit2)->first);
-    // v.push_back((rit--)->first);
-    // v.push_back((rit2++)->first);
+    v.push_back(rit2->first);
+    v.push_back(*rit2 > *rit);
+    v.push_back(*rit2 < *rit);
+    v.push_back((--rit)->first);
+    v.push_back((++rit2)->first);
+    v.push_back((rit--)->first);
+    v.push_back((rit2++)->first);
     for (unsigned long i=0; i<v.size(); ++i)
     std::cout << v[i] << ' ';
     std::cout<< std::endl;
@@ -197,26 +196,40 @@ int main() {
     mp0.insert(std::make_pair(3, 3));
     mp0.insert(std::make_pair(7, 7));
     typename std::map<T, V>::reverse_iterator rit0 = mp0.rbegin();
-    std::cout << rit0->first << rit0->second <<std::endl;
-    // typename _map<T, V>::reverse_iterator rit20 = mp0.rend();
+    typename std::map<T, V>::reverse_iterator rit20 = mp0.rend();
+    std::cout << "   " << rit0->first <<std::endl;
+    rit0++;
+    rit20--;
+
+    v0.push_back(rit20->first);
+    rit0++;
+    v0.push_back(*rit0 == *rit20);
+    rit20--;
     v0.push_back(rit0->first);
-    // rit0++;
-    // rit20--;
-    // v0.push_back(rit0->first);
-    // v0.push_back(rit20->first);
-    // rit0++;
-    // v0.push_back(*rit0 == *rit20);
-    // rit20--;
-    // v0.push_back(rit0->first);
-    // v0.push_back(rit20->first);
-    // v0.push_back(*rit20 > *rit0);
-    // v0.push_back(*rit20 < *rit0);
-    // v0.push_back((--rit0)->first);
-    // v0.push_back((++rit20)->first);
-    // v0.push_back((rit0--)->first);
-    // v0.push_back((rit20++)->first);
+    v0.push_back(rit20->first);
+    v0.push_back(*rit20 > *rit0);
+    v0.push_back(*rit20 < *rit0);
+    v0.push_back((--rit0)->first);
+    v0.push_back((++rit20)->first);
+    v0.push_back((rit0--)->first);
+    v0.push_back((rit20++)->first);
         for (unsigned long i=0; i<v0.size(); ++i)
     std::cout << v0[i] << ' ';
+    // std::cout << v0.size() << " " << v.size() << "\n";
+
+    std::cout << (v0 == v) << "\n";
+
+
+    vector.assign(1000, 1);
+    v.push_back(*vector.rbegin());
+    v.push_back(*(vector.rbegin() + 1));
+
+
+
+
+
+
+
 }
 
 

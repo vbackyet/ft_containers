@@ -65,6 +65,7 @@ namespace ft
         public:
 
             typedef T* iterator_type;
+            typedef ptrdiff_t		difference_type;
             // typedef    pointer;
         	IteratorForVector(const iterator_type it = NULL):_elem(it){};
 
@@ -85,8 +86,8 @@ namespace ft
             IteratorForVector operator++(int){ IteratorForVector temp(*this) ;_elem++; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
             IteratorForVector &operator--(){ _elem--; return (*this);};
             IteratorForVector operator--(int){ IteratorForVector temp(*this) ;_elem--; return (temp);};
-            IteratorForVector operator+(int my_change){ _elem = _elem + my_change; return (*this);};
-            IteratorForVector operator-(int my_change){ _elem = _elem - my_change; return (*this);};
+            IteratorForVector operator+(int my_change){  return (_elem + my_change);};
+            IteratorForVector operator-(int my_change){  return (_elem - my_change);};
             IteratorForVector &operator+=(int my_change){ _elem = _elem + my_change; return (*this);};
             IteratorForVector &operator-=(int my_change){ _elem = _elem - my_change; return (*this);};
             IteratorForVector &operator[](int my_change){ _elem = _elem + my_change; return (*this);};
@@ -114,58 +115,50 @@ namespace ft
     struct ReverseIteratorForVector : ft::iterator<typename ft::iterator_traits<T>::iterator_category, typename ft::iterator_traits<T>::value_type >
     {
 
-        public:
-            typedef T iterator_type;
+  		private:
+			T _elem;
 
-			typedef typename	iterator_traits<iterator_type>::difference_type		difference_type;
-			typedef typename	iterator_traits<iterator_type>::value_type			value_type;
-			typedef typename	iterator_traits<iterator_type>::pointer				pointer;
-			typedef typename	iterator_traits<iterator_type>::reference 			reference;
-			typedef typename	iterator_traits<iterator_type>::iterator_category	iterator_category;
-
-        	ReverseIteratorForVector():_elem(0){};
-			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};       
-            template <class _Up>// для const T*
-			ReverseIteratorForVector(const ReverseIteratorForVector<_Up>& __u, typename std::enable_if<std::is_convertible<_Up, T>::value>::type* = 0): _elem(__u.base()){};
-            template <class Iter>
-            ReverseIteratorForVector& operator=(const ReverseIteratorForVector<Iter>& rev_it) { _elem = rev_it.base(); return *this; }
-            T base() const  { return _elem; }
-
-			// IteratorForVector(typename IteratorForVector::pointer const &vecPoint):_elem(vecPoint){};
-            // ReverseIteratorForVector(pointer vecPoint):_elem(vecPoint){};
-
-			~ReverseIteratorForVector() {};
-
-            bool operator==(ReverseIteratorForVector &right){return (_elem == right._elem);}
-            bool operator!=(ReverseIteratorForVector &right){return (_elem != right._elem);}
-            reference operator*(void) { return (*_elem); };
-            pointer operator->(void) { return &(*_elem); };
+		public:
+			typedef T			iterator_type;
+			typedef typename	iterator_traits<T>::difference_type		difference_type;
+			typedef typename	iterator_traits<T>::value_type			value_type;
+			typedef typename	iterator_traits<T>::pointer				pointer;
+			typedef typename	iterator_traits<T>::reference 			reference;
+			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
 
 
 
-            ReverseIteratorForVector &operator++(){ _elem--; return (*this);};
-            ReverseIteratorForVector operator++(int){ ReverseIteratorForVector temp(*this) ;_elem--; return (temp);}; // почему не работает с &???????????????????????????????????? - вроде поняла
-            ReverseIteratorForVector &operator--(){ _elem++; return (*this);};
-            ReverseIteratorForVector operator--(int){ ReverseIteratorForVector temp(*this) ;_elem++; return (temp);};
-            ReverseIteratorForVector operator+(int my_change){ _elem = _elem - my_change; return (*this);};
-            ReverseIteratorForVector operator-(int my_change){ _elem = _elem + my_change; return (*this);};
-            ReverseIteratorForVector &operator+=(int my_change){ _elem = _elem - my_change; return (*this);};
-            ReverseIteratorForVector &operator-=(int my_change){ _elem = _elem + my_change; return (*this);};
-            ReverseIteratorForVector &operator[](int my_change){ _elem = _elem + my_change; return (*this);};
+			ReverseIteratorForVector():_elem(){};
+			explicit ReverseIteratorForVector(iterator_type iter) : _elem(iter){};
+			template <class Iter>
+			ReverseIteratorForVector (const ReverseIteratorForVector<Iter>& rev_it, typename std::enable_if<std::is_convertible<Iter, iterator_type>::value>::type* = 0): _elem(rev_it.base()){};
+			template <class Iter>
+			ReverseIteratorForVector& operator=(const ReverseIteratorForVector<Iter>& rev_it) { _elem = rev_it.base(); return *this; }
+
+
+
+			iterator_type base() const {return _elem;};
+			
+			reference operator*(void) const { iterator_type tmp = _elem; return *--tmp; };
+			pointer operator->() const {return &(operator*());};
+
+			ReverseIteratorForVector& operator++() {--_elem; return *this;};
+			ReverseIteratorForVector operator++(int) {ReverseIteratorForVector tmp(*this); --_elem; return tmp;};
+			ReverseIteratorForVector& operator--() {++_elem; return *this;};
+			ReverseIteratorForVector operator--(int) {ReverseIteratorForVector tmp(*this); ++_elem; return tmp;};
+
+			ReverseIteratorForVector  operator+ (difference_type n) {return ReverseIteratorForVector(_elem - n);};
+			ReverseIteratorForVector& operator+=(difference_type n) {_elem -= n; return *this;};
+			ReverseIteratorForVector  operator- (difference_type n) {return ReverseIteratorForVector(_elem + n);};
+			ReverseIteratorForVector& operator-=(difference_type n) {_elem += n; return *this;};
+			ReverseIteratorForVector::reference operator[](difference_type n) const {return *(*this + n);};
+
+			bool operator!=(ReverseIteratorForVector const &it) const {return (_elem != it._elem);};
+			bool operator==(ReverseIteratorForVector const &it) const {return (_elem == it._elem);};
+			bool operator>=(ReverseIteratorForVector const &it) const {return (_elem >= it._elem);};
+			bool operator<=(ReverseIteratorForVector const &it) const {return (_elem <= it._elem);};
 			bool operator>(ReverseIteratorForVector const &it) const {return (_elem > it._elem);};
 			bool operator<(ReverseIteratorForVector const &it) const {return (_elem < it._elem);};
-            // операторы для указателей
-            int operator-(ReverseIteratorForVector const &other_iterator)const { return (this->_elem + other_iterator._elem); };
-            int operator+(ReverseIteratorForVector const &other_iterator)const { return (this->_elem - other_iterator._elem); };
-            bool operator>=(ReverseIteratorForVector const &other_iterator) const  { return (this->_elem >= other_iterator._elem); };
-            bool operator<=(ReverseIteratorForVector const &other_iterator) const  { return (this->_elem <= other_iterator._elem); };
-			// iterator_type base() const {return _elem;}
-
-            friend std::ostream &operator<<(std::ostream &os, const ReverseIteratorForVector &_date) {
-                return os  << _date._elem;}
-
-        private:
-            iterator_type _elem;
 
 
 
@@ -278,7 +271,8 @@ namespace ft
             bool operator!=( const IteratorForMap<Iter1>& y) {
                 return !(*this == y);
             };
-            
+            // IteratorForMap operator+(int my_change){ (void) my_change; return (_iter->r);};
+            IteratorForMap operator-(int my_change){ (void) my_change;  return (_iter--);};
         
     };
 
